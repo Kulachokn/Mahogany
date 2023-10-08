@@ -27,13 +27,17 @@ const Dashboard = ({ code }) => {
     localStorage.setItem("accessToken", accessToken);
   }, [accessToken]);
 
+  const storedAccessToken = localStorage.getItem("accessToken");
   useEffect(() => {
+    console.log(search);
+    console.log(accessToken);
+    if (storedAccessToken) {
+      spotifyApi.setAccessToken(storedAccessToken);
+    }
     if (!search) return setSearchResults([]);
-    if (!accessToken) return;
+    // if (!accessToken) return;
 
-    // let cancel = false;
     spotifyApi.searchTracks(search).then((res) => {
-      // if (cancel) return;
       setSearchResults(
         res.body.tracks.items.map((track) => {
           console.log(track);
@@ -55,8 +59,7 @@ const Dashboard = ({ code }) => {
       );
     });
 
-    // return () => (cancel = true);
-  }, [search, accessToken]);
+  }, [search, accessToken, storedAccessToken]);
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "90vh" }}>
@@ -76,7 +79,7 @@ const Dashboard = ({ code }) => {
         ))}
       </div>
       <div>
-        <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
+        <Player accessToken={accessToken ? accessToken : storedAccessToken} trackUri={playingTrack?.uri} />
       </div>
     </Container>
   );
