@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { Container, Form } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-node";
 
-import useAuth from "./useAuth";
-import TrackSearchResult from "./TrackSearchResult";
-import Player from "./Player";
+import useAuth from "../useAuth";
+import TrackSearchResult from "../components/TrackSearchResult";
+import Player from "../components/Player";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "62123b4608c441cb9d53b6c93a965bac",
@@ -24,15 +24,16 @@ const Dashboard = ({ code }) => {
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
+    localStorage.setItem("accessToken", accessToken);
   }, [accessToken]);
 
   useEffect(() => {
     if (!search) return setSearchResults([]);
     if (!accessToken) return;
 
-    let cancel = false;
+    // let cancel = false;
     spotifyApi.searchTracks(search).then((res) => {
-      if (cancel) return;
+      // if (cancel) return;
       setSearchResults(
         res.body.tracks.items.map((track) => {
           console.log(track);
@@ -54,11 +55,11 @@ const Dashboard = ({ code }) => {
       );
     });
 
-    return () => (cancel = true);
+    // return () => (cancel = true);
   }, [search, accessToken]);
 
   return (
-    <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
+    <Container className="d-flex flex-column py-2" style={{ height: "90vh" }}>
       <Form.Control
         type="search"
         placeholder="Search Song"
