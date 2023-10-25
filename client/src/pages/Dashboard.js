@@ -29,8 +29,6 @@ const Dashboard = ({ code }) => {
 
   const storedAccessToken = localStorage.getItem("accessToken");
   useEffect(() => {
-    console.log(search);
-    console.log(accessToken);
     if (storedAccessToken) {
       spotifyApi.setAccessToken(storedAccessToken);
     }
@@ -40,7 +38,6 @@ const Dashboard = ({ code }) => {
     spotifyApi.searchTracks(search).then((res) => {
       setSearchResults(
         res.body.tracks.items.map((track) => {
-          console.log(track);
           const smallestAlbumImage = track.album.images.reduce(
             (smallest, image) => {
               if (image.height < smallest.height) return image;
@@ -62,7 +59,7 @@ const Dashboard = ({ code }) => {
   }, [search, accessToken, storedAccessToken]);
 
   return (
-    <Container className="d-flex flex-column py-2" style={{ height: "90vh" }}>
+    <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
       <Form.Control
         type="search"
         placeholder="Search Song"
@@ -80,6 +77,7 @@ const Dashboard = ({ code }) => {
       </div>
       <div>
         <Player accessToken={accessToken ? accessToken : storedAccessToken} trackUri={playingTrack?.uri} />
+        {/* <Player accessToken={accessToken ? accessToken : storedAccessToken}  /> */}
       </div>
     </Container>
   );

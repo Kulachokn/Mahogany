@@ -7,7 +7,7 @@ import RootLayout from "./Root";
 import Library from "./pages/Library";
 
 const code = new URLSearchParams(window.location.search).get('code');
-// console.log(code);
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,7 +22,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  // return code ? <Dashboard code={code}/> : <Login/>
   return code ? <RouterProvider router={router} code={code}/> : <Login/>
 }
 

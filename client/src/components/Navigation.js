@@ -3,8 +3,6 @@ import { NavLink } from "react-router-dom";
 
 function MainNavigation() {
   return (
-    <header >
-      <nav>
         <ul >
           <li>
             <NavLink
@@ -16,14 +14,11 @@ function MainNavigation() {
           <li>
             <NavLink
               to="/library"
-              
             >
               Library
             </NavLink>
           </li>
         </ul>
-      </nav>
-    </header>
   );
 }
 
