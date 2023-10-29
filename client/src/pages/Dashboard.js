@@ -6,6 +6,11 @@ import useAuth from "../useAuth";
 import TrackSearchResult from "../components/TrackSearchResult";
 import Player from "../components/Player";
 
+import Button from "react-bootstrap/Button";
+import ModalWindow from "../components/Modal";
+
+import axios from "axios";
+
 const spotifyApi = new SpotifyWebApi({
   clientId: "62123b4608c441cb9d53b6c93a965bac",
 });
@@ -25,6 +30,23 @@ const Dashboard = ({ code }) => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
     localStorage.setItem("accessToken", accessToken);
+
+    const getUserId = async () => {
+      const accessToken = localStorage.getItem("accessToken");
+      const response = await fetch("https://api.spotify.com/v1/me", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      const res = await response.json();
+
+      if (res.error) return;
+
+      window.localStorage.setItem("user_id", res.id);
+    };
+
+    getUserId();
   }, [accessToken]);
 
   const storedAccessToken = localStorage.getItem("accessToken");
@@ -33,7 +55,6 @@ const Dashboard = ({ code }) => {
       spotifyApi.setAccessToken(storedAccessToken);
     }
     if (!search) return setSearchResults([]);
-    // if (!accessToken) return;
 
     spotifyApi.searchTracks(search).then((res) => {
       setSearchResults(
@@ -55,8 +76,74 @@ const Dashboard = ({ code }) => {
         })
       );
     });
-
   }, [search, accessToken, storedAccessToken]);
+
+  const [show, setShow] = useState(false);
+
+  const handleCloseModal = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const [formData, setFormData] = useState({});
+
+  const handleFormSubmit = (data) => {
+    setFormData(data);
+  };
+
+  useEffect(() => {
+    if (!Object.keys(formData).length > 0) return;
+
+    // Create a private playlist
+    // spotifyApi
+    //   .createPlaylist(formData.name, {
+    //     description: formData.description,
+    //     public: true,
+    //   })
+    //   .then(
+    //     function (data) {
+    //       console.log("Created playlist!");
+    //     },
+    //     function (err) {
+    //       console.log("Something went wrong!", err);
+    //     }
+    //   );
+
+    const access_token = window.localStorage.getItem("accessToken");
+    const user_id = window.localStorage.getItem("user_id");
+
+    axios
+      .post(
+        `https://api.spotify.com/v1/users/${user_id}/playlists`,
+        {
+          name: formData.name,
+          description: formData.description,
+          public: true,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        // Get the ID of the newly created playlist
+        const playlist_id = response.data.id;
+        console.log(playlist_id);
+      });
+  }, [formData.name, formData.description, formData]);
+
+  useEffect(() => {
+    const user_id = window.localStorage.getItem("user_id");
+    // Get a user's playlists
+    spotifyApi.getUserPlaylists(user_id).then(
+      function (data) {
+        console.log("Retrieved playlists", data.body.items);
+      },
+      function (err) {
+        console.log("Something went wrong!", err);
+      }
+    );
+  }, []);
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
@@ -65,6 +152,14 @@ const Dashboard = ({ code }) => {
         placeholder="Search Song"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+      />
+      <Button variant="primary" onClick={handleShow}>
+        &#43;
+      </Button>
+      <ModalWindow
+        onHide={handleCloseModal}
+        show={show}
+        onFormSubmit={handleFormSubmit}
       />
       <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
         {searchResults.map((track) => (
@@ -76,8 +171,10 @@ const Dashboard = ({ code }) => {
         ))}
       </div>
       <div>
-        <Player accessToken={accessToken ? accessToken : storedAccessToken} trackUri={playingTrack?.uri} />
-        {/* <Player accessToken={accessToken ? accessToken : storedAccessToken}  /> */}
+        <Player
+          accessToken={accessToken ? accessToken : storedAccessToken}
+          trackUri={playingTrack?.uri}
+        />
       </div>
     </Container>
   );
