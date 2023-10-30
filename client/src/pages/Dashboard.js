@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import { Container, Form } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-node";
+import axios from "axios";
+import Button from "react-bootstrap/Button";
 
 import useAuth from "../useAuth";
 import TrackSearchResult from "../components/TrackSearchResult";
 import Player from "../components/Player";
-
-import Button from "react-bootstrap/Button";
 import ModalWindow from "../components/Modal";
-
-import axios from "axios";
+import PlaylistCard from "../components/PlaylistCard";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "62123b4608c441cb9d53b6c93a965bac",
@@ -20,6 +19,9 @@ const Dashboard = ({ code }) => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [playingTrack, setPlayingTrack] = useState();
+  const [show, setShow] = useState(false);
+  const [formData, setFormData] = useState({});
+  const [playlists, setPlaylists] = useState([]);
 
   const chooseTrack = (track) => {
     setPlayingTrack(track);
@@ -78,12 +80,8 @@ const Dashboard = ({ code }) => {
     });
   }, [search, accessToken, storedAccessToken]);
 
-  const [show, setShow] = useState(false);
-
   const handleCloseModal = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const [formData, setFormData] = useState({});
 
   const handleFormSubmit = (data) => {
     setFormData(data);
@@ -135,14 +133,11 @@ const Dashboard = ({ code }) => {
   useEffect(() => {
     const user_id = window.localStorage.getItem("user_id");
     // Get a user's playlists
-    spotifyApi.getUserPlaylists(user_id).then(
-      function (data) {
-        console.log("Retrieved playlists", data.body.items);
-      },
-      function (err) {
-        console.log("Something went wrong!", err);
-      }
-    );
+    spotifyApi.getUserPlaylists(user_id).then((data) => {
+      console.log(data.body.items);
+      const playlistResults = data.body.items;
+      setPlaylists(playlistResults);
+    });
   }, []);
 
   return (
@@ -162,13 +157,15 @@ const Dashboard = ({ code }) => {
         onFormSubmit={handleFormSubmit}
       />
       <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
-        {searchResults.map((track) => (
-          <TrackSearchResult
-            track={track}
-            key={track.uri}
-            chooseTrack={chooseTrack}
-          />
-        ))}
+        {searchResults.length > 1
+          ? searchResults.map((track) => (
+              <TrackSearchResult
+                track={track}
+                key={track.uri}
+                chooseTrack={chooseTrack}
+              />
+            ))
+          : playlists.map((playlist) => <PlaylistCard playlist={playlist} key={playlist.id} />)}
       </div>
       <div>
         <Player

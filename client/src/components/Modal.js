@@ -1,8 +1,6 @@
 import { useState } from "react";
 
 import Modal from "react-bootstrap/Modal";
-// import Button from "react-bootstrap/Button";
-// import Form from "react-bootstrap/Form";
 
 const ModalWindow = ({ onHide, show, onFormSubmit }) => {
   const [formData, setFormData] = useState({
@@ -10,23 +8,17 @@ const ModalWindow = ({ onHide, show, onFormSubmit }) => {
     description: "",
   });
 
-  //   const handleClose = (formData) => {
-  //     onFormSubmit(formData);
-  //     onHide(false);
-  //   };
-
-  //   const handleChange = (e) => {
-  //     const { name, value } = e.target;
-  //     setFormData((formData) => ({
-  //       ...formData,
-  //       [name]: value,
-  //     }));
-  //   };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((formData) => ({
+      ...formData,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onFormSubmit(formData);
-    // console.log(formData);
     onHide(false);
   };
 
@@ -38,8 +30,7 @@ const ModalWindow = ({ onHide, show, onFormSubmit }) => {
           type="text"
           name="name"
           placeholder="My playlist"
-          //   onChange={handleChange}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          onChange={handleChange}
         />
 
         <label>Description</label>
@@ -47,10 +38,7 @@ const ModalWindow = ({ onHide, show, onFormSubmit }) => {
           name="description"
           as="textarea"
           rows={3}
-          //   onChange={handleChange}
-          onChange={(e) =>
-            setFormData({ ...formData, description: e.target.value })
-          }
+          onChange={handleChange}
         />
 
         <button type="submit">Create</button>
