@@ -20,6 +20,22 @@ const Library = ({ code }) => {
     setPlayingTrack(track);
   };
 
+  // const addTrackToPlaylist = (track) => {
+  //   // Add tracks to a playlist
+  //   spotifyApi
+  //     .addTracksToPlaylist("playlistId", [
+  //       "spotify:track:4iV5W9uYEdYUVa79Axb7Rh"
+  //     ])
+  //     .then(
+  //       function (data) {
+  //         console.log("Added tracks to playlist!");
+  //       },
+  //       function (err) {
+  //         console.log("Something went wrong!", err);
+  //       }
+  //     );
+  // };
+
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi

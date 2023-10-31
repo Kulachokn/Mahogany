@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { Container, Form } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-node";
-// import axios from "axios";
 import Button from "react-bootstrap/Button";
 
 import useAuth from "../useAuth";
 import TrackSearchResult from "../components/TrackSearchResult";
 import Player from "../components/Player";
-import ModalWindow from "../components/Modal";
+import ModalWindow from "../components/CreatePlaylistModal";
 import PlaylistCard from "../components/PlaylistCard";
+
+import { getUserPlaylists } from "../utils/getUserPlaylists";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "62123b4608c441cb9d53b6c93a965bac",
@@ -94,62 +95,11 @@ const Dashboard = ({ code }) => {
       });
   };
 
-  // useEffect(() => {
-  //   if (!Object.keys(formData).length > 0) return;
-
-  //   // Create a private playlist
-  //   spotifyApi
-  //     .createPlaylist(formData.name, {
-  //       description: formData.description,
-  //       public: true,
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //       console.log("Created playlist!");
-  //       const playlist_id = response.body.id;
-  //       console.log(playlist_id);
-  //     });
-
-  //   //   const access_token = window.localStorage.getItem("accessToken");
-  //   //   const user_id = window.localStorage.getItem("user_id");
-
-  //   //   axios
-  //   //     .post(
-  //   //       `https://api.spotify.com/v1/users/${user_id}/playlists`,
-  //   //       {
-  //   //         name: formData.name,
-  //   //         description: formData.description,
-  //   //         public: true,
-  //   //       },
-  //   //       {
-  //   //         headers: {
-  //   //           Authorization: `Bearer ${access_token}`,
-  //   //           "Content-Type": "application/json",
-  //   //         },
-  //   //       }
-  //   //     )
-  //   //     .then((response) => {
-  //   //       // Get the ID of the newly created playlist
-  //   //       const playlist_id = response.data.id;
-  //   //       console.log(playlist_id);
-  //   //     });
-  // }, [formData.name, formData.description]);
-
-  //==========================================================
   useEffect(() => {
-    const user_id = window.localStorage.getItem("user_id");
-    const storedAccessToken = localStorage.getItem("accessToken");
-    spotifyApi.setAccessToken(storedAccessToken);
-    // Get a user's playlists
-    spotifyApi
-      .getUserPlaylists(user_id)
-      .then((data) => {
-        const playlistResults = data.body.items;
-        setPlaylists(playlistResults);
-      })
+    getUserPlaylists()
+      .then((playlistResults) => setPlaylists(playlistResults))
       .catch((err) => console.log(err.message));
-  }, [accessToken]);
-  //==========================================================
+  }, []);
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
