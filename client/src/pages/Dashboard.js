@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Container, Form } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-node";
-import axios from "axios";
+// import axios from "axios";
 import Button from "react-bootstrap/Button";
 
 import useAuth from "../useAuth";
@@ -20,7 +20,7 @@ const Dashboard = ({ code }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [playingTrack, setPlayingTrack] = useState();
   const [show, setShow] = useState(false);
-  const [formData, setFormData] = useState({});
+  // const [formData, setFormData] = useState({});
   const [playlists, setPlaylists] = useState([]);
 
   const chooseTrack = (track) => {
@@ -51,11 +51,9 @@ const Dashboard = ({ code }) => {
     getUserId();
   }, [accessToken]);
 
-  const storedAccessToken = localStorage.getItem("accessToken");
+  // const storedAccessToken = localStorage.getItem("accessToken");
+  // spotifyApi.setAccessToken(storedAccessToken);
   useEffect(() => {
-    if (storedAccessToken) {
-      spotifyApi.setAccessToken(storedAccessToken);
-    }
     if (!search) return setSearchResults([]);
 
     spotifyApi.searchTracks(search).then((res) => {
@@ -68,7 +66,6 @@ const Dashboard = ({ code }) => {
             },
             track.album.images[0]
           );
-
           return {
             artist: track.artists[0].name,
             title: track.name,
@@ -78,67 +75,81 @@ const Dashboard = ({ code }) => {
         })
       );
     });
-  }, [search, accessToken, storedAccessToken]);
+  }, [search]);
 
   const handleCloseModal = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleFormSubmit = (data) => {
-    setFormData(data);
-  };
-
-  useEffect(() => {
-    if (!Object.keys(formData).length > 0) return;
-
-    // Create a private playlist
-    // spotifyApi
-    //   .createPlaylist(formData.name, {
-    //     description: formData.description,
-    //     public: true,
-    //   })
-    //   .then(
-    //     function (data) {
-    //       console.log("Created playlist!");
-    //     },
-    //     function (err) {
-    //       console.log("Something went wrong!", err);
-    //     }
-    //   );
-
-    const access_token = window.localStorage.getItem("accessToken");
-    const user_id = window.localStorage.getItem("user_id");
-
-    axios
-      .post(
-        `https://api.spotify.com/v1/users/${user_id}/playlists`,
-        {
-          name: formData.name,
-          description: formData.description,
-          public: true,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
+    // setFormData(data); /// check
+    spotifyApi
+      .createPlaylist(data.name, {
+        description: data.description,
+        public: true,
+      })
       .then((response) => {
-        // Get the ID of the newly created playlist
-        const playlist_id = response.data.id;
+        console.log("Created playlist!");
+        const playlist_id = response.body.id;
         console.log(playlist_id);
       });
-  }, [formData.name, formData.description, formData]);
+  };
 
+  // useEffect(() => {
+  //   if (!Object.keys(formData).length > 0) return;
+
+  //   // Create a private playlist
+  //   spotifyApi
+  //     .createPlaylist(formData.name, {
+  //       description: formData.description,
+  //       public: true,
+  //     })
+  //     .then((response) => {
+  //       console.log(response);
+  //       console.log("Created playlist!");
+  //       const playlist_id = response.body.id;
+  //       console.log(playlist_id);
+  //     });
+
+  //   //   const access_token = window.localStorage.getItem("accessToken");
+  //   //   const user_id = window.localStorage.getItem("user_id");
+
+  //   //   axios
+  //   //     .post(
+  //   //       `https://api.spotify.com/v1/users/${user_id}/playlists`,
+  //   //       {
+  //   //         name: formData.name,
+  //   //         description: formData.description,
+  //   //         public: true,
+  //   //       },
+  //   //       {
+  //   //         headers: {
+  //   //           Authorization: `Bearer ${access_token}`,
+  //   //           "Content-Type": "application/json",
+  //   //         },
+  //   //       }
+  //   //     )
+  //   //     .then((response) => {
+  //   //       // Get the ID of the newly created playlist
+  //   //       const playlist_id = response.data.id;
+  //   //       console.log(playlist_id);
+  //   //     });
+  // }, [formData.name, formData.description]);
+
+  //==========================================================
   useEffect(() => {
     const user_id = window.localStorage.getItem("user_id");
+    const storedAccessToken = localStorage.getItem("accessToken");
+    spotifyApi.setAccessToken(storedAccessToken);
     // Get a user's playlists
-    spotifyApi.getUserPlaylists(user_id).then((data) => {
-      console.log(data.body.items);
-      const playlistResults = data.body.items;
-      setPlaylists(playlistResults);
-    });
-  }, []);
+    spotifyApi
+      .getUserPlaylists(user_id)
+      .then((data) => {
+        const playlistResults = data.body.items;
+        setPlaylists(playlistResults);
+      })
+      .catch((err) => console.log(err.message));
+  }, [accessToken]);
+  //==========================================================
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
@@ -165,13 +176,12 @@ const Dashboard = ({ code }) => {
                 chooseTrack={chooseTrack}
               />
             ))
-          : playlists.map((playlist) => <PlaylistCard playlist={playlist} key={playlist.id} />)}
+          : playlists.map((playlist) => (
+              <PlaylistCard playlist={playlist} key={playlist.id} />
+            ))}
       </div>
       <div>
-        <Player
-          accessToken={accessToken ? accessToken : storedAccessToken}
-          trackUri={playingTrack?.uri}
-        />
+        <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
       </div>
     </Container>
   );

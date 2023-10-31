@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from './pages/Login';
 import Dashboard from "./pages/Dashboard";
+import PlaylistPage from "./pages/PlaylistPage";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./Root";
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
     // errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <Dashboard code={code} /> },
+      { path: "/:playlistId", element: <PlaylistPage code={code} /> },
       { path: "/library", element: <Library code={code} /> },
      
     ],
