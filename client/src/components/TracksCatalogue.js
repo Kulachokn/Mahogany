@@ -1,20 +1,20 @@
 import React from "react";
 
-const TracksCatalogue = ({ track, chooseTrack }) => {
-  // const handlePlay = () => {
-  //     chooseTrack(track);
-  //   };
-//    console.log(track.track.id);
+const TracksCatalogue = ({ track: { track }, chooseTrack }) => {
+    
+  const handlePlay = () => {
+    chooseTrack(track);
+  };
+
   return (
-    // <li key={track.id} onClick={handlePlay}>
-    <li key={track.track.id}>
+    <li key={track.id} onClick={handlePlay}>
       <img
-        src={track.track.album.images[0].url}
-        alt={track.track.name}
+        src={track.album.images[0].url}
+        alt={track.name}
         width="50"
       />
-      <h2>{track.track.name}</h2>
-      <p>{track.track.artists[0].name}</p>
+      <h2>{track.name}</h2>
+      <p>{track.artists[0].name}</p>
     </li>
   );
 };

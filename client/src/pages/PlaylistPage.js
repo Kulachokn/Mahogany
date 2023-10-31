@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import SpotifyWebApi from "spotify-web-api-node";
 import { Container } from "react-bootstrap";
 
-// import Player from "../components/Player";
+import Player from "../components/Player";
 
 import TracksCatalogue from "../components/TracksCatalogue";
 
@@ -16,19 +16,18 @@ const PlaylistPage = (playlist) => {
   const params = useParams();
   const accessToken = localStorage.getItem("accessToken");
 
-  //   const [playingTrack, setPlayingTrack] = useState();
+  const [playingTrack, setPlayingTrack] = useState();
 
-  //   const chooseTrack = (track) => {
-  //     setPlayingTrack(track);
-  //   };
+  const chooseTrack = (track) => {
+    setPlayingTrack(track);
+  };
 
   spotifyApi.setAccessToken(accessToken);
 
   useEffect(() => {
-    spotifyApi
-      .getPlaylist(params.playlistId)
-      .then((data) => {
-        setTracks(data.body.tracks.items)});
+    spotifyApi.getPlaylist(params.playlistId).then((data) => {
+      setTracks(data.body.tracks.items);
+    });
   }, [params.playlistId]);
 
   return (
@@ -43,12 +42,12 @@ const PlaylistPage = (playlist) => {
             <TracksCatalogue
               key={track.track.id}
               track={track}
-              //   chooseTrack={chooseTrack}
+              chooseTrack={chooseTrack}
             />
           ))}
         </ul>
       </Container>
-      {/* <Player accessToken={accessToken} trackUri={playingTrack?.uri} /> */}
+      <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
     </div>
   );
 };
