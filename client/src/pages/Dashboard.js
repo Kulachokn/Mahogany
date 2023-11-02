@@ -99,7 +99,7 @@ const Dashboard = ({ code }) => {
     getUserPlaylists()
       .then((playlistResults) => setPlaylists(playlistResults))
       .catch((err) => console.log(err.message));
-  }, []);
+  });
 
   return (
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
