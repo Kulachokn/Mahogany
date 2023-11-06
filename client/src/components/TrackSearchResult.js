@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import TrackExtensionModal from "./TrackExtensionModal";
 import { addTrackToPlaylist } from "../utils/addTrackToPlaylist";
 
@@ -15,6 +18,16 @@ const TrackSearchResult = ({ track, chooseTrack }) => {
 
   const choosePlaylist = (playlistId) => {
     addTrackToPlaylist(playlistId, track.uri);
+    toast(`Added to ${playlistId}`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
     setOpenMenu(false);
   };
 
@@ -39,6 +52,7 @@ const TrackSearchResult = ({ track, chooseTrack }) => {
         Add to
       </button>
       {openMenu && <TrackExtensionModal choosePlaylist={choosePlaylist} />}
+      <ToastContainer />
     </>
   );
 };

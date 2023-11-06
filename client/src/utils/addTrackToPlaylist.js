@@ -12,6 +12,7 @@ export const addTrackToPlaylist = (playlistId, trackId) => {
     .addTracksToPlaylist(playlistId, [trackId])
     .then(
       (data) => {
+        console.log(data);
         console.log("Added tracks to playlist!");
       },
       function (err) {
