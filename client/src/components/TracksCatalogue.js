@@ -4,20 +4,16 @@ import {addTrackToPlaylist} from "../utils/addTrackToPlaylist";
 
 const TracksCatalogue = ({ track: { track }, chooseTrack }) => {
   const [openMenu, setOpenMenu] = useState(false);
-  const [chosenPlaylist, setChosenPlaylist] = useState("");
 
   const handlePlay = () => {
     chooseTrack(track);
   };
 
-  const handleAct = () => {
+  const handleOpenMenu = () => {
     setOpenMenu(true);
   };
 
   const choosePlaylist = (playlistId) => {
-    setChosenPlaylist(playlistId);
-    console.log(playlistId);
-    console.log(track);
     addTrackToPlaylist(playlistId, track.uri);
     setOpenMenu(false);
   };
@@ -30,7 +26,7 @@ const TracksCatalogue = ({ track: { track }, chooseTrack }) => {
           <h2>{track.name}</h2>
           <p>{track.artists[0].name}</p>
         </div>
-        <button type="button" onClick={handleAct}>
+        <button type="button" onClick={handleOpenMenu}>
           Add to
         </button>
       </li>

@@ -9,7 +9,6 @@ export const addTrackToPlaylist = (playlistId, trackId) => {
   spotifyApi.setAccessToken(storedAccessToken);
   // Add tracks to a playlist
   spotifyApi
-    // .addTracksToPlaylist("playlistId", ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh"])
     .addTracksToPlaylist(playlistId, [trackId])
     .then(
       (data) => {

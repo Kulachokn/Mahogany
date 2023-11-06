@@ -11,7 +11,6 @@ const TrackExtensionModal = ({choosePlaylist}) => {
   }, []);
 
   const handleChoosePlaylist = (playlistId) => {
-    // console.log(playlistId);
     choosePlaylist(playlistId);
   };
 
