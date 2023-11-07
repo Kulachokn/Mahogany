@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import useAuth from "../useAuth";
 import TrackSearchResult from "../components/TrackSearchResult";
 import Player from "../components/Player";
-import ModalWindow from "../components/CreatePlaylistModal";
+import CreatePlaylistModal from "../components/CreatePlaylistModal/CreatePlaylistModal";
 import PlaylistCard from "../components/PlaylistCard";
 
 import { getUserPlaylists } from "../utils/getUserPlaylists";
@@ -96,26 +96,27 @@ const Dashboard = ({ code }) => {
   };
 
   useEffect(() => {
+    if (!accessToken) return;
     getUserPlaylists()
       .then((playlistResults) => setPlaylists(playlistResults))
       .catch((err) => console.log(err.message));
   });
 
   return (
-    <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
+    <Container className="d-flex flex-column" style={{ height: "100vh" }}>
+      <Button variant="primary" onClick={handleShow}>
+        &#43;
+      </Button>
+      <CreatePlaylistModal
+        onHide={handleCloseModal}
+        show={show}
+        onFormSubmit={handleFormSubmit}
+      />
       <Form.Control
         type="search"
         placeholder="Search Song"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-      />
-      <Button variant="primary" onClick={handleShow}>
-        &#43;
-      </Button>
-      <ModalWindow
-        onHide={handleCloseModal}
-        show={show}
-        onFormSubmit={handleFormSubmit}
       />
       <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
         {searchResults.length > 1

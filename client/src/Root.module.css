@@ -1,0 +1,33 @@
+.wrapper {
+padding-top: 30px;
+}
+
+.sidenav {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    z-index: 99;
+    top: 160px;
+    left: 0;
+    overflow-x: hidden;
+    /* padding-top: 20px; */
+  }
+  
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    font-size: 16px;
+    color: #727474;
+    display: block;
+  }
+  
+  .sidenav a:hover {
+    color: #0d818c;
+  }
+  
+  .main {
+    /* margin-top: 40px; */
+    margin-left: 160px; /* Same as the width of the sidenav */
+    font-size: 16px;
+    /* padding: 0px 10px; */
+    z-index: 10;
+  }

@@ -11,9 +11,14 @@
 }
 
 .logo {
-  text-decoration: none;
   font-size: 30px;
   font-weight: bold;
   color: #0D818C;
+  display: flex;
+  align-items: center;
   /* background: lightgray 50% / cover no-repeat; */
+}
+
+.logo img {
+  width: 100px;
 }
