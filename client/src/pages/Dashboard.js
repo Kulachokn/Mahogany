@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Container, Form } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-node";
 import Button from "react-bootstrap/Button";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 import useAuth from "../useAuth";
 import TrackSearchResult from "../components/TrackSearchResult";
@@ -21,7 +23,6 @@ const Dashboard = ({ code }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [playingTrack, setPlayingTrack] = useState();
   const [show, setShow] = useState(false);
-  // const [formData, setFormData] = useState({});
   const [playlists, setPlaylists] = useState([]);
 
   const chooseTrack = (track) => {
@@ -56,41 +57,48 @@ const Dashboard = ({ code }) => {
   // spotifyApi.setAccessToken(storedAccessToken);
   useEffect(() => {
     if (!search) return setSearchResults([]);
-
-    spotifyApi.searchTracks(search).then((res) => {
-      setSearchResults(
-        res.body.tracks.items.map((track) => {
-          const smallestAlbumImage = track.album.images.reduce(
-            (smallest, image) => {
-              if (image.height < smallest.height) return image;
-              return smallest;
-            },
-            track.album.images[0]
-          );
-          return {
-            artist: track.artists[0].name,
-            title: track.name,
-            uri: track.uri,
-            albumUrl: smallestAlbumImage.url,
-          };
-        })
-      );
-    });
+    try {
+      spotifyApi.searchTracks(search).then((res) => {
+        setSearchResults(
+          res.body.tracks.items.map((track) => {
+            const smallestAlbumImage = track.album.images.reduce(
+              (smallest, image) => {
+                if (image.height < smallest.height) return image;
+                return smallest;
+              },
+              track.album.images[0]
+            );
+            return {
+              artist: track.artists[0].name,
+              title: track.name,
+              uri: track.uri,
+              albumUrl: smallestAlbumImage.url,
+            };
+          })
+        );
+      });
+    } catch (error) {
+      console.error("There are no results for your query", error);
+    }
   }, [search]);
 
   const handleCloseModal = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleFormSubmit = (data) => {
-    // setFormData(data); /// check
     spotifyApi
       .createPlaylist(data.name, {
         description: data.description,
         public: true,
       })
       .then((response) => {
-        console.log("Created playlist!");
+        const notify = () =>
+          toast(`Playlist ${data.name} created!`, {
+            position: "bottom-right",
+            hideProgressBar: true,
+          });
         const playlist_id = response.body.id;
+        notify();
         console.log(playlist_id);
       });
   };
@@ -104,6 +112,7 @@ const Dashboard = ({ code }) => {
 
   return (
     <Container className="d-flex flex-column" style={{ height: "100vh" }}>
+      <ToastContainer />
       <Button variant="primary" onClick={handleShow}>
         &#43;
       </Button>
