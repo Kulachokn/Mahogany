@@ -13,5 +13,5 @@ export const getUserPlaylists = () => {
   return spotifyApi
     .getUserPlaylists(user_id)
     .then((data) => data.body.items)
-    .catch((err) => console.log(err.message));
+    .catch((err) => console.log(err.message)); 
 };

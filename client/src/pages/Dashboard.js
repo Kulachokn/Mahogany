@@ -18,12 +18,14 @@ const spotifyApi = new SpotifyWebApi({
 });
 
 const Dashboard = ({ code }) => {
+  const savedPlaylists = JSON.parse(localStorage.getItem("playlists"));
+
   const accessToken = useAuth(code);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [playingTrack, setPlayingTrack] = useState();
   const [show, setShow] = useState(false);
-  const [playlists, setPlaylists] = useState([]);
+  const [playlists, setPlaylists] = useState(savedPlaylists);
 
   const chooseTrack = (track) => {
     setPlayingTrack(track);
@@ -49,8 +51,19 @@ const Dashboard = ({ code }) => {
 
       window.localStorage.setItem("user_id", res.id);
     };
-
+console.log('accessRequest');
     getUserId();
+  }, [accessToken]);
+
+  useEffect(() => {
+    if (!accessToken) return;
+    console.log('getRequest');
+    getUserPlaylists()
+      .then((playlistResults) => {
+        localStorage.setItem("playlists", JSON.stringify(playlistResults));
+        setPlaylists(playlistResults)
+      })
+      .catch((err) => console.log(err.message));
   }, [accessToken]);
 
   // const storedAccessToken = localStorage.getItem("accessToken");
@@ -58,6 +71,9 @@ const Dashboard = ({ code }) => {
   useEffect(() => {
     if (!search) return setSearchResults([]);
     try {
+        const storedAccessToken = localStorage.getItem("accessToken");
+        spotifyApi.setAccessToken(storedAccessToken);
+      console.log('searchRequest')
       spotifyApi.searchTracks(search).then((res) => {
         setSearchResults(
           res.body.tracks.items.map((track) => {
@@ -86,6 +102,7 @@ const Dashboard = ({ code }) => {
   const handleShow = () => setShow(true);
 
   const handleFormSubmit = (data) => {
+    console.log('formRequest');
     spotifyApi
       .createPlaylist(data.name, {
         description: data.description,
@@ -100,15 +117,14 @@ const Dashboard = ({ code }) => {
         const playlist_id = response.body.id;
         notify();
         console.log(playlist_id);
+        getUserPlaylists()
+      .then((playlistResults) => {
+        localStorage.setItem("playlists", JSON.stringify(playlistResults));
+        setPlaylists(playlistResults)
+      })
+      .catch((err) => console.log(err.message));
       });
   };
-
-  useEffect(() => {
-    if (!accessToken) return;
-    getUserPlaylists()
-      .then((playlistResults) => setPlaylists(playlistResults))
-      .catch((err) => console.log(err.message));
-  });
 
   return (
     <Container className="d-flex flex-column" style={{ height: "100vh" }}>
@@ -136,9 +152,9 @@ const Dashboard = ({ code }) => {
                 chooseTrack={chooseTrack}
               />
             ))
-          : playlists.map((playlist) => (
+          : (playlists && playlists.map((playlist) => (
               <PlaylistCard playlist={playlist} key={playlist.id} />
-            ))}
+            )))}
       </div>
       <div>
         <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
