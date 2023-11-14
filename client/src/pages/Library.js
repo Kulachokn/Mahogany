@@ -53,6 +53,13 @@ const Library = ({ code }) => {
       );
   }, [accessToken]);
 
+  spotifyApi.removeFromMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
+  .then(function(data) {
+    console.log('Removed!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
   return (
     <>
       <Container

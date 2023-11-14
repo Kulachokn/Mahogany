@@ -29,7 +29,6 @@ const Dashboard = ({ code }) => {
 
   const chooseTrack = (track) => {
     setPlayingTrack(track);
-    setSearch("");
   };
 
   useEffect(() => {

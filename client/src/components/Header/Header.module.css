@@ -10,15 +10,32 @@
   background-color: white;
 }
 
-.logo {
-  font-size: 30px;
-  font-weight: bold;
-  color: #0D818C;
+.logoLink {
   display: flex;
   align-items: center;
-  /* background: lightgray 50% / cover no-repeat; */
 }
 
-.logo img {
-  width: 100px;
+.logoText {
+  font-size: 30px;
+  font-weight: bold;
+  /* background-color: rgb(21, 90, 97); */
+  background-image: radial-gradient(#65bbc3, #155a61);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgb(21, 90, 97);
+  background: linear-gradient(
+    90deg,
+    rgba(21, 90, 97, 1) 0%,
+    rgba(13, 129, 140, 1) 35%,
+    rgba(101, 187, 195, 1) 100%
+  );
+  stroke: #ffffff;
+  margin-right: 10px;
 }
