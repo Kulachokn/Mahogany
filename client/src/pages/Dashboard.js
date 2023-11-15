@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 import useAuth from "../useAuth";
-import TrackSearchResult from "../components/TrackSearchResult";
+import TrackSearchResult from "../components/TrackSearchResult/TrackSearchResult";
 import Player from "../components/Player";
 import CreatePlaylistModal from "../components/CreatePlaylistModal/CreatePlaylistModal";
 import PlaylistCard from "../components/PlaylistCard";
@@ -50,17 +50,17 @@ const Dashboard = ({ code }) => {
 
       window.localStorage.setItem("user_id", res.id);
     };
-console.log('accessRequest');
+    console.log("accessRequest");
     getUserId();
   }, [accessToken]);
 
   useEffect(() => {
     if (!accessToken) return;
-    console.log('getRequest');
+    console.log("getRequest");
     getUserPlaylists()
       .then((playlistResults) => {
         localStorage.setItem("playlists", JSON.stringify(playlistResults));
-        setPlaylists(playlistResults)
+        setPlaylists(playlistResults);
       })
       .catch((err) => console.log(err.message));
   }, [accessToken]);
@@ -70,9 +70,9 @@ console.log('accessRequest');
   useEffect(() => {
     if (!search) return setSearchResults([]);
     try {
-        const storedAccessToken = localStorage.getItem("accessToken");
-        spotifyApi.setAccessToken(storedAccessToken);
-      console.log('searchRequest')
+      const storedAccessToken = localStorage.getItem("accessToken");
+      spotifyApi.setAccessToken(storedAccessToken);
+      console.log("searchRequest");
       spotifyApi.searchTracks(search).then((res) => {
         setSearchResults(
           res.body.tracks.items.map((track) => {
@@ -101,7 +101,7 @@ console.log('accessRequest');
   const handleShow = () => setShow(true);
 
   const handleFormSubmit = (data) => {
-    console.log('formRequest');
+    console.log("formRequest");
     spotifyApi
       .createPlaylist(data.name, {
         description: data.description,
@@ -117,11 +117,11 @@ console.log('accessRequest');
         notify();
         console.log(playlist_id);
         getUserPlaylists()
-      .then((playlistResults) => {
-        localStorage.setItem("playlists", JSON.stringify(playlistResults));
-        setPlaylists(playlistResults)
-      })
-      .catch((err) => console.log(err.message));
+          .then((playlistResults) => {
+            localStorage.setItem("playlists", JSON.stringify(playlistResults));
+            setPlaylists(playlistResults);
+          })
+          .catch((err) => console.log(err.message));
       });
   };
 
@@ -144,16 +144,18 @@ console.log('accessRequest');
       />
       <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
         {searchResults.length > 1
-          ? searchResults.map((track) => (
+          ? searchResults.map((track, ind) => (
               <TrackSearchResult
+                ind={ind}
                 track={track}
                 key={track.uri}
                 chooseTrack={chooseTrack}
               />
             ))
-          : (playlists && playlists.map((playlist) => (
+          : playlists &&
+            playlists.map((playlist) => (
               <PlaylistCard playlist={playlist} key={playlist.id} />
-            )))}
+            ))}
       </div>
       <div>
         <Player accessToken={accessToken} trackUri={playingTrack?.uri} />

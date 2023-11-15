@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-node";
 import { MutatingDots } from "react-loader-spinner";
 
-import TrackSearchResult from "../components/TrackSearchResult";
+import TrackSearchResult from "../components/TrackSearchResult/TrackSearchResult";
 import Player from "../components/Player";
 
 const spotifyApi = new SpotifyWebApi({
@@ -32,7 +32,14 @@ const Library = () => {
           offset: 1,
         });
 
+        const convertDuration = (duration) => {
+          const minutes = Math.floor(duration / (1000 * 60));
+          const seconds = Math.floor((duration % (1000 * 60)) / 1000);
+          return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+        };
+
         const tracks = response.body.items.map((item) => {
+          // console.log(item);
           const smallestAlbumImage = item.track.album.images.reduce(
             (smallest, image) => {
               if (image.height < smallest.height) return image;
@@ -46,6 +53,8 @@ const Library = () => {
             title: item.track.name,
             uri: item.track.uri,
             albumUrl: smallestAlbumImage.url,
+            album: item.track.album.name,
+            duration: convertDuration(item.track.duration_ms),
           };
         });
 
@@ -85,8 +94,9 @@ const Library = () => {
               visible={true}
             />
           ) : (
-            savedTracks.map((track) => (
+            savedTracks.map((track, ind) => (
               <TrackSearchResult
+                ind={ind}
                 track={track}
                 key={track.uri}
                 chooseTrack={chooseTrack}

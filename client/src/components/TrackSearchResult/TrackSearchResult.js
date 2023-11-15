@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import TrackExtensionModal from "./TrackExtensionModal";
-import { addTrackToPlaylist } from "../utils/addTrackToPlaylist";
+import TrackExtensionModal from "../TrackExtensionModal";
+import { addTrackToPlaylist } from "../../utils/addTrackToPlaylist";
+import styles from "./TrackSearchResult.module.css";
 
-const TrackSearchResult = ({ track, chooseTrack }) => {
+const TrackSearchResult = ({ track, ind, chooseTrack }) => {
   const [openMenu, setOpenMenu] = useState(false);
 
   const handlePlay = () => {
@@ -34,23 +35,26 @@ const TrackSearchResult = ({ track, chooseTrack }) => {
   return (
     <>
       <div
-        className="d-flex m-2 align-items-center"
+        className={styles.item}
         style={{ cursor: "pointer" }}
         onClick={handlePlay}
       >
+        <span className={styles.number}>{ind + 1}</span>
         <img
           src={track.albumUrl}
           alt={track.title}
-          style={{ height: "64px", width: "64px" }}
+          className={styles.image}
         />
-        <div className="ml-3">
-          <div>{track.title}</div>
-          <div className="text-muted">{track.artist}</div>
+        <div className={styles.title}>
+        <h3 className={styles.name}>{track.title}</h3>
+        <p className={styles.artist}>{track.artist}</p>
         </div>
-      </div>
+        <p className={styles.album}>{track.album}</p>
+        <p className={styles.duration}>{track.duration}</p>
       <button type="button" onClick={handleOpenMenu}>
         Add to
       </button>
+      </div>
       {openMenu && <TrackExtensionModal choosePlaylist={choosePlaylist} />}
       <ToastContainer />
     </>
