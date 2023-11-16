@@ -65,7 +65,7 @@ const Dashboard = ({ code }) => {
       .catch((err) => console.log(err.message));
   }, [accessToken]);
 
-  // const storedAccessToken = localStorage.getItem("accessToken");
+  const storedAccessToken = localStorage.getItem("accessToken");
   // spotifyApi.setAccessToken(storedAccessToken);
   useEffect(() => {
     if (!search) return setSearchResults([]);
@@ -157,9 +157,7 @@ const Dashboard = ({ code }) => {
               <PlaylistCard playlist={playlist} key={playlist.id} />
             ))}
       </div>
-      <div>
-        <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
-      </div>
+        <Player accessToken={accessToken ? accessToken : storedAccessToken} trackUri={playingTrack?.uri} />
     </Container>
   );
 };
