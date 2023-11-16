@@ -2,9 +2,13 @@ import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-node";
 import { MutatingDots } from "react-loader-spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import TrackSearchResult from "../components/TrackSearchResult/TrackSearchResult";
 import Player from "../components/Player";
+import { getSmallestAlbumImage } from "../utils/getSmallestAlbumImage";
+import { convertTrackDuration } from "../utils/convertTrackDuration";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "62123b4608c441cb9d53b6c93a965bac",
@@ -32,21 +36,10 @@ const Library = () => {
           offset: 1,
         });
 
-        const convertDuration = (duration) => {
-          const minutes = Math.floor(duration / (1000 * 60));
-          const seconds = Math.floor((duration % (1000 * 60)) / 1000);
-          return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-        };
+        const convertedDuration = (duration) => convertTrackDuration(duration);
 
         const tracks = response.body.items.map((item) => {
-          // console.log(item);
-          const smallestAlbumImage = item.track.album.images.reduce(
-            (smallest, image) => {
-              if (image.height < smallest.height) return image;
-              return smallest;
-            },
-            item.track.album.images[0]
-          );
+          const smallestAlbumImage = getSmallestAlbumImage(item.track.album);
 
           return {
             artist: item.track.artists[0].name,
@@ -54,7 +47,7 @@ const Library = () => {
             uri: item.track.uri,
             albumUrl: smallestAlbumImage.url,
             album: item.track.album.name,
-            duration: convertDuration(item.track.duration_ms),
+            duration: convertedDuration(item.track.duration_ms),
           };
         });
 
@@ -71,6 +64,25 @@ const Library = () => {
 
   const chooseTrack = (track) => {
     setPlayingTrack(track);
+  };
+
+  const removeFromFavorites = async (track, title) => {
+    try {
+      await spotifyApi.removeFromMySavedTracks([track]);
+      toast(`Track ${title} removed`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      console.error("Error removing track:", error);
+      toast.error(`Error removing track: ${error.message}`);
+    }
   };
 
   return (
@@ -100,9 +112,12 @@ const Library = () => {
                 track={track}
                 key={track.uri}
                 chooseTrack={chooseTrack}
+                removeFromFavorites={removeFromFavorites}
+                page="library"
               />
             ))
           )}
+          <ToastContainer />
         </div>
         <Player
           accessToken={spotifyApi.getAccessToken()}
@@ -114,10 +129,3 @@ const Library = () => {
 };
 
 export default Library;
-
-// spotifyApi.removeFromMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
-// .then(function(data) {
-//   console.log('Removed!');
-// }, function(err) {
-//   console.log('Something went wrong!', err);
-// });

@@ -150,6 +150,7 @@ const Dashboard = ({ code }) => {
                 track={track}
                 key={track.uri}
                 chooseTrack={chooseTrack}
+                page="dashboard"
               />
             ))
           : playlists &&
