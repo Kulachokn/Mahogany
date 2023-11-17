@@ -11,6 +11,8 @@ import Player from "../components/Player";
 import CreatePlaylistModal from "../components/CreatePlaylistModal/CreatePlaylistModal";
 import PlaylistCard from "../components/PlaylistCard";
 import { getUserPlaylists } from "../utils/getUserPlaylists";
+import { getSmallestAlbumImage } from "../utils/getSmallestAlbumImage";
+import { convertTrackDuration } from "../utils/convertTrackDuration";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
@@ -72,25 +74,22 @@ const Dashboard = ({ code }) => {
       const storedAccessToken = localStorage.getItem("accessToken");
       spotifyApi.setAccessToken(storedAccessToken);
       console.log("searchRequest");
-      spotifyApi.searchTracks(search).then((res) => {
-        if (res) return toast.error("There are no results for your query");
-        setSearchResults(
-          res.body.tracks.items.map((track) => {
-            const smallestAlbumImage = track.album.images.reduce(
-              (smallest, image) => {
-                if (image.height < smallest.height) return image;
-                return smallest;
-              },
-              track.album.images[0]
-            );
-            return {
-              artist: track.artists[0].name,
-              title: track.name,
-              uri: track.uri,
-              albumUrl: smallestAlbumImage.url,
-            };
-          })
-        );
+      spotifyApi.searchTracks(search).then((response) => {
+        const convertedDuration = (duration) => convertTrackDuration(duration);
+        const tracks = response.body.tracks.items.map((item) => {
+          const smallestAlbumImage = getSmallestAlbumImage(item.album);
+
+          return {
+            artist: item.artists[0].name,
+            title: item.name,
+            uri: item.uri,
+            albumUrl: smallestAlbumImage.url,
+            album: item.album.name,
+            duration: convertedDuration(item.duration_ms),
+          };
+        });
+
+        setSearchResults(tracks);
       });
     } catch (error) {
       console.error("There are no results for your query", error);
