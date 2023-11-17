@@ -127,6 +127,25 @@ const Dashboard = ({ code }) => {
       });
   };
 
+  const addToFavorites = async (track, title) => {
+    try {
+      await spotifyApi.addToMySavedTracks([track]);
+      toast(`Track ${title} added`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      console.error("Error adding track:", error);
+      toast.error(`Error adding track: ${error.message}`);
+    }
+  };
+
   return (
     <Container className="d-flex flex-column" style={{ height: "100vh" }}>
       <ToastContainer />
@@ -152,6 +171,7 @@ const Dashboard = ({ code }) => {
                 track={track}
                 key={track.uri}
                 chooseTrack={chooseTrack}
+                addToFavorites={addToFavorites}
                 page="dashboard"
               />
             ))

@@ -11,6 +11,7 @@ const TrackSearchResult = ({
   ind,
   chooseTrack,
   removeFromFavorites,
+  addToFavorites,
   page,
 }) => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -24,6 +25,12 @@ const TrackSearchResult = ({
     track = track.uri.split(":")[2];
     removeFromFavorites(track, title);
   };
+
+  const handleAdd = () => {
+    let title = track.title;
+    track = track.uri.split(":")[2];
+    addToFavorites(track, title)
+  }
 
   const handleOpenMenu = () => {
     setOpenMenu(true);
@@ -78,7 +85,7 @@ const TrackSearchResult = ({
             </svg>
           </button>
         ) : (
-          <button type="button" className={styles.btn}>
+          <button type="button" onClick={handleAdd} className={styles.btn}>
             <svg
             className={styles.addIcon}
               fill="#109BA8"
