@@ -11,7 +11,7 @@ import { getSmallestAlbumImage } from "../utils/getSmallestAlbumImage";
 import { convertTrackDuration } from "../utils/convertTrackDuration";
 
 const spotifyApi = new SpotifyWebApi({
-  clientId: "62123b4608c441cb9d53b6c93a965bac",
+  clientId: process.env.CLIENT_ID,
 });
 
 const Library = () => {

@@ -8,7 +8,7 @@ import Player from "../components/Player";
 import TracksCatalogue from "../components/TracksCatalogue";
 
 const spotifyApi = new SpotifyWebApi({
-  clientId: "62123b4608c441cb9d53b6c93a965bac",
+  clientId: process.env.CLIENT_ID,
 });
 
 const PlaylistPage = (playlist) => {

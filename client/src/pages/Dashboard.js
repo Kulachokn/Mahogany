@@ -10,11 +10,10 @@ import TrackSearchResult from "../components/TrackSearchResult/TrackSearchResult
 import Player from "../components/Player";
 import CreatePlaylistModal from "../components/CreatePlaylistModal/CreatePlaylistModal";
 import PlaylistCard from "../components/PlaylistCard";
-
 import { getUserPlaylists } from "../utils/getUserPlaylists";
 
 const spotifyApi = new SpotifyWebApi({
-  clientId: "62123b4608c441cb9d53b6c93a965bac",
+  clientId: process.env.CLIENT_ID,
 });
 
 const Dashboard = ({ code }) => {
@@ -158,7 +157,10 @@ const Dashboard = ({ code }) => {
               <PlaylistCard playlist={playlist} key={playlist.id} />
             ))}
       </div>
-        <Player accessToken={accessToken ? accessToken : storedAccessToken} trackUri={playingTrack?.uri} />
+      <Player
+        accessToken={accessToken ? accessToken : storedAccessToken}
+        trackUri={playingTrack?.uri}
+      />
     </Container>
   );
 };

@@ -1,7 +1,7 @@
 import SpotifyWebApi from "spotify-web-api-node";
 
 const spotifyApi = new SpotifyWebApi({
-  clientId: "62123b4608c441cb9d53b6c93a965bac",
+  clientId: process.env.CLIENT_ID,
 });
 
 export const addTrackToPlaylist = (playlistId, trackId) => {
