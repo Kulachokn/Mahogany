@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import TrackExtensionModal from "../TrackExtensionModal";
+import TrackExtensionMenu from "../TrackExtensionMenu/TrackExtensionMenu";
 import { addTrackToPlaylist } from "../../utils/addTrackToPlaylist";
 import styles from "./TrackSearchResult.module.css";
 
@@ -20,7 +20,7 @@ const TrackSearchResult = ({
   };
 
   const handleRemove = () => {
-    let title = track.title
+    let title = track.title;
     track = track.uri.split(":")[2];
     removeFromFavorites(track, title);
   };
@@ -60,16 +60,12 @@ const TrackSearchResult = ({
         <p className={styles.album}>{track.album}</p>
         <p className={styles.duration}>{track.duration}</p>
         {page === "library" ? (
-          <button
-            type="button"
-            onClick={handleRemove}
-            className={styles.removeBtn}
-          >
+          <button type="button" onClick={handleRemove} className={styles.btn}>
             <svg
+              className={styles.removeIcon}
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className={styles.removeIcon}
             >
               <path
                 fillRule="evenodd"
@@ -84,11 +80,33 @@ const TrackSearchResult = ({
         ) : (
           <button type="button">Add to favorites</button>
         )}
-        <button type="button" onClick={handleOpenMenu}>
-          Add to
+        <button type="button" onClick={handleOpenMenu} className={styles.btn}>
+          <svg
+            className={styles.addIcon}
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M810.666667 149.333333H213.333333c-23.466667 0-42.666667 19.2-42.666666 42.666667v128c0 23.466667 19.2 42.666667 42.666666 42.666667h597.333334c23.466667 0 42.666667-19.2 42.666666-42.666667V192c0-23.466667-19.2-42.666667-42.666666-42.666667zM810.666667 405.333333H213.333333c-23.466667 0-42.666667 19.2-42.666666 42.666667v128c0 23.466667 19.2 42.666667 42.666666 42.666667h597.333334c23.466667 0 42.666667-19.2 42.666666-42.666667v-128c0-23.466667-19.2-42.666667-42.666666-42.666667zM810.666667 661.333333H213.333333c-23.466667 0-42.666667 19.2-42.666666 42.666667v128c0 23.466667 19.2 42.666667 42.666666 42.666667h597.333334c23.466667 0 42.666667-19.2 42.666666-42.666667v-128c0-23.466667-19.2-42.666667-42.666666-42.666667z"
+              fill="#D1C4E9"
+            />
+            <path
+              d="M810.666667 810.666667m-213.333334 0a213.333333 213.333333 0 1 0 426.666667 0 213.333333 213.333333 0 1 0-426.666667 0Z"
+              fill="#109BA8"
+            />
+            <path
+              d="M768 682.666667h85.333333v256h-85.333333z"
+              fill="#FFFFFF"
+            />
+            <path
+              d="M682.666667 768h256v85.333333H682.666667z"
+              fill="#FFFFFF"
+            />
+          </svg>
         </button>
+        {openMenu && <TrackExtensionMenu choosePlaylist={choosePlaylist} />}
       </div>
-      {openMenu && <TrackExtensionModal choosePlaylist={choosePlaylist} />}
       <ToastContainer />
     </>
   );

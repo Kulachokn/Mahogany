@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TrackExtensionModal from "./TrackExtensionModal";
+import TrackExtensionMenu from "./TrackExtensionMenu/TrackExtensionMenu";
 import {addTrackToPlaylist} from "../utils/addTrackToPlaylist";
 
 const TracksCatalogue = ({ track: { track }, chooseTrack }) => {
@@ -30,7 +30,7 @@ const TracksCatalogue = ({ track: { track }, chooseTrack }) => {
           Add to
         </button>
       </li>
-      {openMenu && <TrackExtensionModal choosePlaylist={choosePlaylist} />}
+      {openMenu && <TrackExtensionMenu choosePlaylist={choosePlaylist} />}
     </>
   );
 };

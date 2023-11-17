@@ -4,6 +4,7 @@
   grid-template-columns: 0.2fr 0.5fr 1.5fr 2.5fr 1fr 1fr 1fr;
   padding: 10px 0;
   padding-right: 20px;
+  position: relative;
 }
 
 .number {
@@ -37,7 +38,7 @@
   color: #636464;
 }
 
-.removeBtn {
+.btn {
     border: none;
     cursor: pointer;
     background: none;
@@ -51,6 +52,6 @@
     transition: fill 0.5s ease-in-out;
 }
 
-.removed {
-    fill: #ffffff;
+.addIcon {
+  width: 25px;
 }
