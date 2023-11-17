@@ -73,6 +73,7 @@ const Dashboard = ({ code }) => {
       spotifyApi.setAccessToken(storedAccessToken);
       console.log("searchRequest");
       spotifyApi.searchTracks(search).then((res) => {
+        if (res) return toast.error("There are no results for your query");
         setSearchResults(
           res.body.tracks.items.map((track) => {
             const smallestAlbumImage = track.album.images.reduce(
@@ -93,6 +94,7 @@ const Dashboard = ({ code }) => {
       });
     } catch (error) {
       console.error("There are no results for your query", error);
+      toast.error("There are no results for your query");
     }
   }, [search]);
 
@@ -107,20 +109,22 @@ const Dashboard = ({ code }) => {
         public: true,
       })
       .then((response) => {
-        const notify = () =>
-          toast(`Playlist ${data.name} created!`, {
-            position: "bottom-right",
-            hideProgressBar: true,
-          });
+        toast(`Playlist ${data.name} created!`, {
+          position: "bottom-right",
+          hideProgressBar: true,
+        });
         const playlist_id = response.body.id;
-        notify();
+
         console.log(playlist_id);
         getUserPlaylists()
           .then((playlistResults) => {
             localStorage.setItem("playlists", JSON.stringify(playlistResults));
             setPlaylists(playlistResults);
           })
-          .catch((err) => console.log(err.message));
+          .catch((err) => {
+            console.log(err.message);
+            toast.error("New Playlist wasn't added");
+          });
       });
   };
 

@@ -55,6 +55,7 @@ const Library = () => {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
+        toast.error(`Error fetching data: ${error.message}`);
         setLoading(false);
       }
     };
