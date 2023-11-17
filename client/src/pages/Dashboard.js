@@ -31,7 +31,7 @@ const Dashboard = ({ code }) => {
   };
 
   useEffect(() => {
-    if (!accessToken) return;
+    if (!accessToken || typeof accessToken !== "string") return;
     spotifyApi.setAccessToken(accessToken);
     localStorage.setItem("accessToken", accessToken);
 
@@ -54,7 +54,7 @@ const Dashboard = ({ code }) => {
   }, [accessToken]);
 
   useEffect(() => {
-    if (!accessToken) return;
+    if (!accessToken || typeof accessToken !== "string") return;
     console.log("getRequest");
     getUserPlaylists()
       .then((playlistResults) => {

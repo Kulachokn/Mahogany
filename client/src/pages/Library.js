@@ -24,7 +24,7 @@ const Library = () => {
       try {
         const accessToken = localStorage.getItem("accessToken");
 
-        if (!accessToken) {
+        if (!accessToken || typeof accessToken !== "string") {
           setLoading(false);
           return;
         }
