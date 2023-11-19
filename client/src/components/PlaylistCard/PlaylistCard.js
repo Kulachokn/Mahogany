@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import styles from "./PlaylistCard.module.css";
+
 const PlaylistCard = ({ playlist }) => {
   let playlistImg = "";
   if (playlist.images.length > 0) {
@@ -11,10 +13,14 @@ const PlaylistCard = ({ playlist }) => {
   }
 
   return (
-    <li>
-      <Link to={playlist.id}>
-        <img src={playlistImg} alt={playlist.name} width="250" />
-        <h2>{playlist.name}</h2>
+    <li className={styles.item}>
+      <Link to={playlist.id} className={styles.link}>
+        <div className={styles.imgWrap}>
+          <img src={playlistImg} alt={playlist.name} width="200" />
+        </div>
+        <div className={styles.thumb}>
+          <h2 className={styles.title}>{playlist.name}</h2>
+        </div>
       </Link>
     </li>
   );

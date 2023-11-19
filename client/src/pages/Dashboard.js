@@ -9,7 +9,7 @@ import useAuth from "../useAuth";
 import TrackSearchResult from "../components/TrackSearchResult/TrackSearchResult";
 import Player from "../components/Player";
 import CreatePlaylistModal from "../components/CreatePlaylistModal/CreatePlaylistModal";
-import PlaylistsContainer from "../components/PlaylistsContainer"
+import PlaylistsContainer from "../components/PlaylistsContainer/PlaylistsContainer"
 import { getUserPlaylists } from "../utils/getUserPlaylists";
 import { getSmallestAlbumImage } from "../utils/getSmallestAlbumImage";
 import { convertTrackDuration } from "../utils/convertTrackDuration";
