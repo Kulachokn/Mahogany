@@ -11,12 +11,12 @@ const PlaylistCard = ({ playlist }) => {
   }
 
   return (
-    <Link to={playlist.id}>
-      <div>
+    <li>
+      <Link to={playlist.id}>
         <img src={playlistImg} alt={playlist.name} width="250" />
         <h2>{playlist.name}</h2>
-      </div>
-    </Link>
+      </Link>
+    </li>
   );
 };
 

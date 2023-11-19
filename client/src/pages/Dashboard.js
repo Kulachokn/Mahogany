@@ -9,7 +9,7 @@ import useAuth from "../useAuth";
 import TrackSearchResult from "../components/TrackSearchResult/TrackSearchResult";
 import Player from "../components/Player";
 import CreatePlaylistModal from "../components/CreatePlaylistModal/CreatePlaylistModal";
-import PlaylistCard from "../components/PlaylistCard";
+import PlaylistsContainer from "../components/PlaylistsContainer"
 import { getUserPlaylists } from "../utils/getUserPlaylists";
 import { getSmallestAlbumImage } from "../utils/getSmallestAlbumImage";
 import { convertTrackDuration } from "../utils/convertTrackDuration";
@@ -26,7 +26,7 @@ const Dashboard = ({ code }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [playingTrack, setPlayingTrack] = useState();
   const [show, setShow] = useState(false);
-  const [playlists, setPlaylists] = useState(savedPlaylists);
+  const [userPlaylists, setUserPlaylists] = useState(savedPlaylists);
 
   const chooseTrack = (track) => {
     setPlayingTrack(track);
@@ -61,7 +61,7 @@ const Dashboard = ({ code }) => {
     getUserPlaylists()
       .then((playlistResults) => {
         localStorage.setItem("playlists", JSON.stringify(playlistResults));
-        setPlaylists(playlistResults);
+        setUserPlaylists(playlistResults);
       })
       .catch((err) => console.log(err.message));
   }, [accessToken]);
@@ -118,7 +118,7 @@ const Dashboard = ({ code }) => {
         getUserPlaylists()
           .then((playlistResults) => {
             localStorage.setItem("playlists", JSON.stringify(playlistResults));
-            setPlaylists(playlistResults);
+            setUserPlaylists(playlistResults);
           })
           .catch((err) => {
             console.log(err.message);
@@ -175,10 +175,9 @@ const Dashboard = ({ code }) => {
                 page="dashboard"
               />
             ))
-          : playlists &&
-            playlists.map((playlist) => (
-              <PlaylistCard playlist={playlist} key={playlist.id} />
-            ))}
+          : userPlaylists && 
+              <PlaylistsContainer userPlaylists={userPlaylists} />
+            }
       </div>
       <Player
         accessToken={accessToken ? accessToken : storedAccessToken}
