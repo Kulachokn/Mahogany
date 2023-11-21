@@ -1,10 +1,10 @@
 import PlaylistCard from "../PlaylistCard/PlaylistCard";
 import styles from './PlaylistsContainer.module.css';
 
-const PlaylistsContainer = ({userPlaylists}) => {
+const PlaylistsContainer = ({playlists}) => {
   return (
     <ul className={styles.list}>
-      {userPlaylists.map((playlist) => (
+      {playlists.map((playlist) => (
         <PlaylistCard playlist={playlist} key={playlist.id} />
       ))}
     </ul>

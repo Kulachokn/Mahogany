@@ -9,26 +9,24 @@ import useAuth from "../useAuth";
 import TrackSearchResult from "../components/TrackSearchResult/TrackSearchResult";
 import Player from "../components/Player";
 import CreatePlaylistModal from "../components/CreatePlaylistModal/CreatePlaylistModal";
-import PlaylistsContainer from "../components/PlaylistsContainer/PlaylistsContainer";
-import { getUserPlaylists } from "../utils/getUserPlaylists";
 import { getSmallestAlbumImage } from "../utils/getSmallestAlbumImage";
 import { convertTrackDuration } from "../utils/convertTrackDuration";
-import { convertDate } from "../utils/convertDate";
 import { getUserProfile } from "../utils/getUserProfile";
+
+import PlaylistsGallery from "../components/PlaylistsGallery";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
 });
 
 const Dashboard = ({ code }) => {
-  const savedPlaylists = JSON.parse(localStorage.getItem("playlists"));
-
   const accessToken = useAuth(code);
+
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [playingTrack, setPlayingTrack] = useState();
   const [show, setShow] = useState(false);
-  const [userPlaylists, setUserPlaylists] = useState(savedPlaylists);
+  const [updateSavedPlaylists, setUpdateSavedPlaylists] = useState(false)
 
   useEffect(() => {
     if (!accessToken || typeof accessToken !== "string") return;
@@ -40,20 +38,9 @@ const Dashboard = ({ code }) => {
     console.log("accessRequest");
   }, [accessToken]);
 
-  useEffect(() => {
-    if (!accessToken || typeof accessToken !== "string") return;
-    console.log("getRequest");
-    getUserPlaylists()
-      .then((playlistResults) => {
-        localStorage.setItem("playlists", JSON.stringify(playlistResults));
-        setUserPlaylists(playlistResults);
-      })
-      .catch((err) => console.log(err.message));
-  }, [accessToken]);
-
   const storedAccessToken = localStorage.getItem("accessToken");
   // spotifyApi.setAccessToken(storedAccessToken);
-  
+
   useEffect(() => {
     if (!search) return setSearchResults([]);
     try {
@@ -83,20 +70,6 @@ const Dashboard = ({ code }) => {
     }
   }, [search, storedAccessToken]);
 
-  // useEffect(() => {
-  //   spotifyApi.setAccessToken(storedAccessToken);
-
-  //   const timestamp = convertDate(Date.now());
-  //   console.log(timestamp);
-
-  //   spotifyApi.getFeaturedPlaylists({ limit : 3, offset: 1, country: 'SE', locale: 'sv_SE', timestamp:'2014-10-23T09:00:00' })
-  //   .then(function(data) {
-  //     console.log(data.body);
-  //   }, function(err) {
-  //     console.log("Something went wrong!", err);
-  //   });
-  // }, []);
-
   const chooseTrack = (track) => {
     setPlayingTrack(track);
   };
@@ -116,18 +89,11 @@ const Dashboard = ({ code }) => {
           position: "bottom-right",
           hideProgressBar: true,
         });
-        const playlist_id = response.body.id;
-
-        console.log(playlist_id);
-        getUserPlaylists()
-          .then((playlistResults) => {
-            localStorage.setItem("playlists", JSON.stringify(playlistResults));
-            setUserPlaylists(playlistResults);
-          })
-          .catch((err) => {
-            console.log(err.message);
-            toast.error("New Playlist wasn't added");
-          });
+        setUpdateSavedPlaylists(true)
+      })
+      .catch((err) => {
+        console.log(err.message);
+        toast.error("New Playlist wasn't added");
       });
   };
 
@@ -168,20 +134,20 @@ const Dashboard = ({ code }) => {
         onChange={(e) => setSearch(e.target.value)}
       />
       <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
-        {searchResults.length > 1
-          ? searchResults.map((track, ind) => (
-              <TrackSearchResult
-                ind={ind}
-                track={track}
-                key={track.uri}
-                chooseTrack={chooseTrack}
-                addToFavorites={addToFavorites}
-                page="dashboard"
-              />
-            ))
-          : userPlaylists && (
-              <PlaylistsContainer userPlaylists={userPlaylists} />
-            )}
+        {searchResults.length > 1 ? (
+          searchResults.map((track, ind) => (
+            <TrackSearchResult
+              ind={ind}
+              track={track}
+              key={track.uri}
+              chooseTrack={chooseTrack}
+              addToFavorites={addToFavorites}
+              page="dashboard"
+            />
+          ))
+        ) : (
+          <PlaylistsGallery updateSavedPlaylists={updateSavedPlaylists}/>
+        )}
       </div>
       <Player
         accessToken={accessToken ? accessToken : storedAccessToken}
