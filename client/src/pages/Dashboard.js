@@ -9,10 +9,12 @@ import useAuth from "../useAuth";
 import TrackSearchResult from "../components/TrackSearchResult/TrackSearchResult";
 import Player from "../components/Player";
 import CreatePlaylistModal from "../components/CreatePlaylistModal/CreatePlaylistModal";
-import PlaylistsContainer from "../components/PlaylistsContainer/PlaylistsContainer"
+import PlaylistsContainer from "../components/PlaylistsContainer/PlaylistsContainer";
 import { getUserPlaylists } from "../utils/getUserPlaylists";
 import { getSmallestAlbumImage } from "../utils/getSmallestAlbumImage";
 import { convertTrackDuration } from "../utils/convertTrackDuration";
+import { convertDate } from "../utils/convertDate";
+import { getUserProfile } from "../utils/getUserProfile";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
@@ -28,31 +30,14 @@ const Dashboard = ({ code }) => {
   const [show, setShow] = useState(false);
   const [userPlaylists, setUserPlaylists] = useState(savedPlaylists);
 
-  const chooseTrack = (track) => {
-    setPlayingTrack(track);
-  };
-
   useEffect(() => {
     if (!accessToken || typeof accessToken !== "string") return;
     spotifyApi.setAccessToken(accessToken);
     localStorage.setItem("accessToken", accessToken);
 
-    const getUserId = async () => {
-      const accessToken = localStorage.getItem("accessToken");
-      const response = await fetch("https://api.spotify.com/v1/me", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+    getUserProfile();
 
-      const res = await response.json();
-
-      if (res.error) return;
-
-      window.localStorage.setItem("user_id", res.id);
-    };
     console.log("accessRequest");
-    getUserId();
   }, [accessToken]);
 
   useEffect(() => {
@@ -68,10 +53,11 @@ const Dashboard = ({ code }) => {
 
   const storedAccessToken = localStorage.getItem("accessToken");
   // spotifyApi.setAccessToken(storedAccessToken);
+  
   useEffect(() => {
     if (!search) return setSearchResults([]);
     try {
-      const storedAccessToken = localStorage.getItem("accessToken");
+      // const storedAccessToken = localStorage.getItem("accessToken");
       spotifyApi.setAccessToken(storedAccessToken);
       console.log("searchRequest");
       spotifyApi.searchTracks(search).then((response) => {
@@ -95,7 +81,25 @@ const Dashboard = ({ code }) => {
       console.error("There are no results for your query", error);
       toast.error("There are no results for your query");
     }
-  }, [search]);
+  }, [search, storedAccessToken]);
+
+  // useEffect(() => {
+  //   spotifyApi.setAccessToken(storedAccessToken);
+
+  //   const timestamp = convertDate(Date.now());
+  //   console.log(timestamp);
+
+  //   spotifyApi.getFeaturedPlaylists({ limit : 3, offset: 1, country: 'SE', locale: 'sv_SE', timestamp:'2014-10-23T09:00:00' })
+  //   .then(function(data) {
+  //     console.log(data.body);
+  //   }, function(err) {
+  //     console.log("Something went wrong!", err);
+  //   });
+  // }, []);
+
+  const chooseTrack = (track) => {
+    setPlayingTrack(track);
+  };
 
   const handleCloseModal = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -175,9 +179,9 @@ const Dashboard = ({ code }) => {
                 page="dashboard"
               />
             ))
-          : userPlaylists && 
+          : userPlaylists && (
               <PlaylistsContainer userPlaylists={userPlaylists} />
-            }
+            )}
       </div>
       <Player
         accessToken={accessToken ? accessToken : storedAccessToken}
