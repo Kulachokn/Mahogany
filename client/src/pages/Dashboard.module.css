@@ -1,0 +1,42 @@
+.controllersWrap {
+    display: flex;
+}
+
+.addPlaylist {
+  background: none;
+  border: none;
+}
+
+.addPlaylistIcon {
+    width: 25px;
+  height: 25px;
+    fill: #109ba8;
+}
+
+.searchWrap {
+  display: flex;
+}
+
+.form {
+  width: 330px;
+  border: none;
+  border-bottom: 2px solid #109ba8;
+}
+
+/* .form:focus {
+    outline-style: none;
+    outline-color: transparent;
+    outline: none;
+} */
+
+.searchBtn {
+  border: none;
+  background: none;
+  height: 40px;
+}
+
+.searchIcon {
+  width: 25px;
+  height: 25px;
+  stroke: #727474;
+}
