@@ -51,9 +51,12 @@ const Dashboard = ({ code }) => {
         const convertedDuration = (duration) => convertTrackDuration(duration);
         const tracks = response.body.tracks.items.map((item) => {
           const smallestAlbumImage = getSmallestAlbumImage(item.album);
+          const getArtists = item.artists
+          .map((artist) => artist.name)
+          .join(", ");
 
           return {
-            artist: item.artists[0].name,
+            artist: getArtists,
             title: item.name,
             uri: item.uri,
             albumUrl: smallestAlbumImage.url,

@@ -45,7 +45,6 @@ const PlaylistsGallery = ({updateSavedPlaylists}) => {
               timestamp: timestamp,
             })
             .then((data) => {
-                console.log(data.body.playlists.items);
                 setFeaturedPlaylists(data.body.playlists.items)
               }
             );

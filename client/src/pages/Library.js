@@ -40,9 +40,12 @@ const Library = () => {
 
         const tracks = response.body.items.map((item) => {
           const smallestAlbumImage = getSmallestAlbumImage(item.track.album);
+          const getArtists = item.track.artists
+          .map((artist) => artist.name)
+          .join(", ");
 
           return {
-            artist: item.track.artists[0].name,
+            artist: getArtists,
             title: item.track.name,
             uri: item.track.uri,
             albumUrl: smallestAlbumImage.url,

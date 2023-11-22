@@ -61,10 +61,10 @@ const TrackSearchResult = ({
         <span className={styles.number}>{ind + 1}</span>
         <img src={track.albumUrl} alt={track.title} className={styles.image} />
         <div className={styles.title}>
-          <h3 className={styles.name}>{track.title}</h3>
+          <h3 className={styles.name}>{track.title ? track.title : track.name}</h3>
           <p className={styles.artist}>{track.artist}</p>
         </div>
-        <p className={styles.album}>{track.album}</p>
+        <p className={styles.album}>{track.album.name ? track.album.name : track.album}</p>
         <p className={styles.duration}>{track.duration}</p>
         {page === "library" ? (
           <button type="button" onClick={handleRemove} className={styles.btn}>
