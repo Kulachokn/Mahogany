@@ -41,8 +41,8 @@ const Library = () => {
         const tracks = response.body.items.map((item) => {
           const smallestAlbumImage = getSmallestAlbumImage(item.track.album);
           const getArtists = item.track.artists
-          .map((artist) => artist.name)
-          .join(", ");
+            .map((artist) => artist.name)
+            .join(", ");
 
           return {
             artist: getArtists,
@@ -90,45 +90,42 @@ const Library = () => {
   };
 
   return (
-    <>
-      <Container
-        className="d-flex flex-column py-2"
-        style={{ height: "100vh" }}
-      >
-        <h1>My Library</h1>
-        <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
-          {loading ? (
-            <MutatingDots
-              height="100"
-              width="100"
-              color="#109BA8"
-              secondaryColor="#109BA8"
-              radius="12.5"
-              ariaLabel="mutating-dots-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
-              visible={true}
+    <div>
+      <h1>My Library</h1>
+      <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
+        {loading ? (
+          <MutatingDots
+            height="100"
+            width="100"
+            color="#109BA8"
+            secondaryColor="#109BA8"
+            radius="12.5"
+            ariaLabel="mutating-dots-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        ) : (
+          savedTracks.map((track, ind) => (
+            <TrackSearchResult
+              ind={ind}
+              track={track}
+              key={track.uri}
+              chooseTrack={chooseTrack}
+              removeFromFavorites={removeFromFavorites}
+              page="library"
             />
-          ) : (
-            savedTracks.map((track, ind) => (
-              <TrackSearchResult
-                ind={ind}
-                track={track}
-                key={track.uri}
-                chooseTrack={chooseTrack}
-                removeFromFavorites={removeFromFavorites}
-                page="library"
-              />
-            ))
-          )}
-          <ToastContainer />
-        </div>
+          ))
+        )}
+        <ToastContainer />
+      </div>
+      <div className="player">
         <Player
           accessToken={spotifyApi.getAccessToken()}
           trackUri={playingTrack?.uri}
         />
-      </Container>
-    </>
+      </div>
+    </div>
   );
 };
 

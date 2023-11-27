@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-node";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -131,81 +131,83 @@ const Dashboard = ({ code }) => {
   };
 
   return (
-    <Container className="d-flex flex-column" style={{ height: "100vh" }}>
-      <div className={styles.controllersWrap}>
-        <button
-          type="button"
-          onClick={handleShow}
-          className={styles.addPlaylist}
-        >
-          <svg
-            className={styles.addPlaylistIcon}
-            viewBox="0 0 32 32"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M15.5 29.5c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM21.938 15.938c0-0.552-0.448-1-1-1h-4v-4c0-0.552-0.447-1-1-1h-1c-0.553 0-1 0.448-1 1v4h-4c-0.553 0-1 0.448-1 1v1c0 0.553 0.447 1 1 1h4v4c0 0.553 0.447 1 1 1h1c0.553 0 1-0.447 1-1v-4h4c0.552 0 1-0.447 1-1v-1z"></path>
-          </svg>
-        </button>
-        <div className={styles.searchWrap}>
+      <div>
+        <div className={styles.controllersWrap}>
           <button
             type="button"
-            className={styles.searchBtn}
-            onClick={handleButtonClick}
+            onClick={handleShow}
+            className={styles.addPlaylist}
           >
             <svg
-              className={styles.searchIcon}
-              viewBox="0 0 24 24"
-              fill="none"
+              className={styles.addPlaylistIcon}
+              viewBox="0 0 32 32"
+              version="1.1"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+              <path d="M15.5 29.5c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM21.938 15.938c0-0.552-0.448-1-1-1h-4v-4c0-0.552-0.447-1-1-1h-1c-0.553 0-1 0.448-1 1v4h-4c-0.553 0-1 0.448-1 1v1c0 0.553 0.447 1 1 1h4v4c0 0.553 0.447 1 1 1h1c0.553 0 1-0.447 1-1v-4h4c0.552 0 1-0.447 1-1v-1z"></path>
             </svg>
           </button>
-        </div>
-        {formVisible && (
-          <Form.Control
-            type="search"
-            placeholder="Search Song"
-            className={styles.form}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onBlur={handleInputBlur}
-          />
-        )}
-      </div>
-      <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
-        {searchResults.length > 1 ? (
-          searchResults.map((track, ind) => (
-            <TrackSearchResult
-              ind={ind}
-              track={track}
-              key={track.uri}
-              chooseTrack={chooseTrack}
-              addToFavorites={addToFavorites}
-              page="dashboard"
+          <div className={styles.searchWrap}>
+            <button
+              type="button"
+              className={styles.searchBtn}
+              onClick={handleButtonClick}
+            >
+              <svg
+                className={styles.searchIcon}
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          {formVisible && (
+            <Form.Control
+              type="search"
+              placeholder="Search Song"
+              className={styles.form}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onBlur={handleInputBlur}
             />
-          ))
-        ) : (
-          <PlaylistsGallery updateSavedPlaylists={updateSavedPlaylists} />
-        )}
+          )}
+        </div>
+        <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
+          {searchResults.length > 1 ? (
+            searchResults.map((track, ind) => (
+              <TrackSearchResult
+                ind={ind}
+                track={track}
+                key={track.uri}
+                chooseTrack={chooseTrack}
+                addToFavorites={addToFavorites}
+                page="dashboard"
+              />
+            ))
+          ) : (
+            <PlaylistsGallery updateSavedPlaylists={updateSavedPlaylists} />
+          )}
+        </div>
+        <div className="player">
+          <Player
+            accessToken={accessToken ? accessToken : storedAccessToken}
+            trackUri={playingTrack?.uri}
+          />
+        </div>
+        <ToastContainer />
+        <CreatePlaylistModal
+          onHide={handleCloseModal}
+          show={show}
+          onFormSubmit={handleFormSubmit}
+        />
       </div>
-      <Player
-        accessToken={accessToken ? accessToken : storedAccessToken}
-        trackUri={playingTrack?.uri}
-      />
-      <ToastContainer />
-      <CreatePlaylistModal
-        onHide={handleCloseModal}
-        show={show}
-        onFormSubmit={handleFormSubmit}
-      />
-    </Container>
   );
 };
 

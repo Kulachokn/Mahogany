@@ -1,5 +1,5 @@
 .controllersWrap {
-    display: flex;
+  display: flex;
 }
 
 .addPlaylist {
@@ -8,9 +8,9 @@
 }
 
 .addPlaylistIcon {
-    width: 25px;
+  width: 25px;
   height: 25px;
-    fill: #109ba8;
+  fill: #109ba8;
 }
 
 .searchWrap {

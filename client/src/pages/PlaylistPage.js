@@ -71,10 +71,7 @@ const PlaylistPage = (playlist) => {
   return (
     <div>
       <Link to="..">Back</Link>
-      <Container
-        className="d-flex flex-column py-2"
-        style={{ height: "100vh" }}
-      >
+      <div>
         <ToastContainer />
         <ul className="" style={{ overflowY: "auto" }}>
           {tracks.map((track, ind) => (
@@ -87,8 +84,10 @@ const PlaylistPage = (playlist) => {
             />
           ))}
         </ul>
-      </Container>
-      <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
+      </div>
+      <div className="player">
+        <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
+      </div>
     </div>
   );
 };
