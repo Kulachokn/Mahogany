@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-node";
 import { MutatingDots } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";

@@ -13,7 +13,6 @@ const PlaylistCard = ({ playlist }) => {
   }
 
   return (
-    <li className={styles.item}>
       <Link to={playlist.id} className={styles.link}>
         <div className={styles.imgWrap}>
           <img src={playlistImg} alt={playlist.name} width="200" height="200"/>
@@ -22,7 +21,6 @@ const PlaylistCard = ({ playlist }) => {
           <h2 className={styles.title}>{playlist.name}</h2>
         </div>
       </Link>
-    </li>
   );
 };
 
