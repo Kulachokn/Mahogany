@@ -4,6 +4,7 @@ import SpotifyWebApi from "spotify-web-api-node";
 import { getUserPlaylists } from "../../utils/getUserPlaylists";
 import { convertDate } from "../../utils/convertDate";
 import PlaylistCarousel from "../Carousel/Carousel";
+import CategoriesList from "../CategoryList/CategoriesList";
 import styles from "./PlaylistsGallery.module.css";
 
 const spotifyApi = new SpotifyWebApi({
@@ -16,6 +17,7 @@ const PlaylistsGallery = ({ updateSavedPlaylists }) => {
   const [userPlaylists, setUserPlaylists] = useState(savedPlaylists);
   const [featuredPlaylists, setFeaturedPlaylists] = useState([]);
   const [newReleases, setNewReleases] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const storedAccessToken = localStorage.getItem("accessToken");
   spotifyApi.setAccessToken(storedAccessToken);
@@ -62,8 +64,26 @@ const PlaylistsGallery = ({ updateSavedPlaylists }) => {
     fetchData();
   }, [storedAccessToken]);
 
+  useEffect(() => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const country = user.country;
+      spotifyApi
+        .getCategories({
+          country: country,
+        })
+        .then((data) => {
+          console.log(data.body.categories.items);
+          setCategories(data.body.categories.items);
+        });
+    } catch (error) {
+      console.error("Something went wrong:", error.message);
+    }
+  }, []);
+
   return (
     <>
+      <CategoriesList categories={categories} />
       <div className={styles.wrap}>
         <h2 className={styles.title}>My Playlists</h2>
         {userPlaylists && <PlaylistCarousel playlists={userPlaylists} />}
