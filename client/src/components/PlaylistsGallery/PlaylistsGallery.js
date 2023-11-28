@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 
-import { getUserPlaylists } from "../utils/getUserPlaylists";
-import { convertDate } from "../utils/convertDate";
-// import PlaylistsContainer from "./PlaylistsContainer/PlaylistsContainer";
-import PlaylistCarousel from "./Carousel/Carousel";
+import { getUserPlaylists } from "../../utils/getUserPlaylists";
+import { convertDate } from "../../utils/convertDate";
+import PlaylistCarousel from "../Carousel/Carousel";
+import styles from "./PlaylistsGallery.module.css";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
@@ -63,14 +63,20 @@ const PlaylistsGallery = ({ updateSavedPlaylists }) => {
   }, [storedAccessToken]);
 
   return (
-    <div>
-      <h2>My Playlists</h2>
-      {userPlaylists && <PlaylistCarousel playlists={userPlaylists} />}
-      <h2>Featured Playlists</h2>
-      <PlaylistCarousel playlists={featuredPlaylists} />
-      <h2>New Releases</h2>
-      <PlaylistCarousel playlists={newReleases} />
-    </div>
+    <>
+      <div className={styles.wrap}>
+        <h2 className={styles.title}>My Playlists</h2>
+        {userPlaylists && <PlaylistCarousel playlists={userPlaylists} />}
+      </div>
+      <div className={styles.wrap}>
+        <h2 className={styles.title}>Featured Playlists</h2>
+        <PlaylistCarousel playlists={featuredPlaylists} />
+      </div>
+      <div className={styles.wrap}>
+        <h2 className={styles.title}>New Releases</h2>
+        <PlaylistCarousel playlists={newReleases} />
+      </div>
+    </>
   );
 };
 

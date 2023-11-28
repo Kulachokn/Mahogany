@@ -13,7 +13,7 @@ import { convertTrackDuration } from "../utils/convertTrackDuration";
 import { getUserProfile } from "../utils/getUserProfile";
 import styles from "./Dashboard.module.css";
 
-import PlaylistsGallery from "../components/PlaylistsGallery";
+import PlaylistsGallery from "../components/PlaylistsGallery/PlaylistsGallery";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
@@ -131,12 +131,13 @@ const Dashboard = ({ code }) => {
   };
 
   return (
-      <div>
+      <>
         <div className={styles.controllersWrap}>
           <button
             type="button"
             onClick={handleShow}
             className={styles.addPlaylist}
+            title="Create a Playlist"
           >
             <svg
               className={styles.addPlaylistIcon}
@@ -152,6 +153,7 @@ const Dashboard = ({ code }) => {
               type="button"
               className={styles.searchBtn}
               onClick={handleButtonClick}
+              title="Search"
             >
               <svg
                 className={styles.searchIcon}
@@ -179,7 +181,8 @@ const Dashboard = ({ code }) => {
             />
           )}
         </div>
-        <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
+        {/* <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}> */}
+        <div className={styles.contentWrap}>
           {searchResults.length > 1 ? (
             searchResults.map((track, ind) => (
               <TrackSearchResult
@@ -207,7 +210,7 @@ const Dashboard = ({ code }) => {
           show={show}
           onFormSubmit={handleFormSubmit}
         />
-      </div>
+      </>
   );
 };
 

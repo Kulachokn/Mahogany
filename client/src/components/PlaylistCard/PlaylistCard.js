@@ -13,14 +13,16 @@ const PlaylistCard = ({ playlist }) => {
   }
 
   return (
+    <div className={styles.item}>
       <Link to={playlist.id} className={styles.link}>
         <div className={styles.imgWrap}>
-          <img src={playlistImg} alt={playlist.name} width="200" height="200"/>
+          <img src={playlistImg} alt={playlist.name} width="100%" />
         </div>
         <div className={styles.thumb}>
           <h2 className={styles.title}>{playlist.name}</h2>
         </div>
       </Link>
+    </div>
   );
 };
 

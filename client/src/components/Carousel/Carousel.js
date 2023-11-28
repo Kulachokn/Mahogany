@@ -2,6 +2,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 import PlaylistCard from "../PlaylistCard/PlaylistCard";
+import styles from './Carousel.module.css';
 
 const PlaylistCarousel = ({ playlists }) => {
   const responsive = {
@@ -12,10 +13,11 @@ const PlaylistCarousel = ({ playlists }) => {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
       items: 5,
+      slidesToSlide: 3
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2,
+      items: 5,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
@@ -23,7 +25,7 @@ const PlaylistCarousel = ({ playlists }) => {
     },
   };
   return (
-    <Carousel responsive={responsive} infinite={true}>
+    <Carousel responsive={responsive} infinite={true} itemClass={styles.itemCard}>
       {playlists.map((playlist) => (
         <PlaylistCard playlist={playlist} key={playlist.id} />
       ))}
