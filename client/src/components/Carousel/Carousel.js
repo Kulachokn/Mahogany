@@ -5,6 +5,7 @@ import PlaylistCard from "../PlaylistCard/PlaylistCard";
 import styles from './Carousel.module.css';
 
 const PlaylistCarousel = ({ playlists }) => {
+  console.log(playlists);
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },

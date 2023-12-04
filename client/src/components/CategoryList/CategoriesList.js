@@ -13,6 +13,7 @@ const spotifyApi = new SpotifyWebApi({
 const CategoriesList = () => {
   const [playlistsByCategory, setPlaylistsByCategory] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [categoryName, setCategoryName] = useState("");
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem("accessToken");
@@ -36,9 +37,7 @@ const CategoriesList = () => {
 
   const handleChooseCategory = async (e) => {
     let chosenCategory = e.currentTarget.dataset.id;
-    console.log(e.target);
-    console.log(e.currentTarget);
-    console.log(chosenCategory);
+    setCategoryName(e.currentTarget.dataset.name);
     try {
       const user = JSON.parse(localStorage.getItem("user"));
       const country = user.country;
@@ -59,10 +58,25 @@ const CategoriesList = () => {
     <>
       {playlistsByCategory.length > 0 ? (
         <>
-          <button type="button" onClick={handleBackToCategories}>
-            Back to Categories
+          <button
+            type="button"
+            className={styles.leftBtn}
+            onClick={handleBackToCategories}
+          >
+            <svg
+              className={styles.iconLeftBtn}
+              viewBox="0 0 24 24"
+              id="left-arrow icon flat-color"
+              data-name="Flat Color"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                id="primary"
+                d="M21,11H5.41l1.3-1.29A1,1,0,0,0,5.29,8.29l-3,3a1,1,0,0,0,0,1.42l3,3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L5.41,13H21a1,1,0,0,0,0-2Z"
+              ></path>
+            </svg>
           </button>
-          <h3>By chosen category</h3>
+          <h3>{categoryName && categoryName}</h3>
           <PlaylistCarousel playlists={playlistsByCategory} />
         </>
       ) : (
@@ -75,6 +89,7 @@ const CategoriesList = () => {
             >
               <Link
                 to="#"
+                data-name={category.name}
                 data-id={category.id}
                 className={styles.link}
                 onClick={handleChooseCategory}

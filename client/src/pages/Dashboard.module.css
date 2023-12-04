@@ -1,5 +1,6 @@
 .controllersWrap {
   display: flex;
+  padding: 20px 0;
 }
 
 .addPlaylist {
@@ -42,5 +43,5 @@
 }
 
 .contentWrap {
-  padding-bottom: 80px;
+  padding: 20px 0 80px 0 ;
 }

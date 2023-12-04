@@ -17,7 +17,6 @@ const PlaylistsGallery = ({ updateSavedPlaylists }) => {
   const [userPlaylists, setUserPlaylists] = useState(savedPlaylists);
   const [featuredPlaylists, setFeaturedPlaylists] = useState([]);
   const [newReleases, setNewReleases] = useState([]);
-  // const [categories, setCategories] = useState([]);
 
   const storedAccessToken = localStorage.getItem("accessToken");
   spotifyApi.setAccessToken(storedAccessToken);
@@ -55,6 +54,7 @@ const PlaylistsGallery = ({ updateSavedPlaylists }) => {
           offset: 1,
           country: country,
         });
+        console.log(newReleases.body.albums.items);
         setNewReleases(newReleases.body.albums.items);
       } catch (error) {
         console.error("Something went wrong:", error.message);
@@ -63,23 +63,6 @@ const PlaylistsGallery = ({ updateSavedPlaylists }) => {
 
     fetchData();
   }, [storedAccessToken]);
-
-  // useEffect(() => {
-  //   try {
-  //     const user = JSON.parse(localStorage.getItem("user"));
-  //     const country = user.country;
-  //     spotifyApi
-  //       .getCategories({
-  //         country: country,
-  //       })
-  //       .then((data) => {
-  //         // console.log(data.body.categories.items);
-  //         setCategories(data.body.categories.items);
-  //       });
-  //   } catch (error) {
-  //     console.error("Something went wrong:", error.message);
-  //   }
-  // }, []);
 
   return (
     <>

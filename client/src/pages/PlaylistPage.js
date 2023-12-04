@@ -59,35 +59,35 @@ const PlaylistPage = (playlist) => {
   //   console.log('Something went wrong!', err);
   // });
 
-//   if (playingTrack) {
-//     spotifyApiMain.setAccessToken(accessToken);
-//   spotifyApiMain.skipToPrevious()
-//   .then(function() {
-//     console.log('Skip to previous');
-//   }, function(err) {
-//     //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
-//     console.log('Something went wrong!', err);
-//   });
+  //   if (playingTrack) {
+  //     spotifyApiMain.setAccessToken(accessToken);
+  //   spotifyApiMain.skipToPrevious()
+  //   .then(function() {
+  //     console.log('Skip to previous');
+  //   }, function(err) {
+  //     //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+  //     console.log('Something went wrong!', err);
+  //   });
 
-//   spotifyApiMain.skipToNext()
-//   .then(function() {
-//     console.log('Skip to next');
-//   }, function(err) {
-//     //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
-//     console.log('Something went wrong!', err);
-//   });
-// }
+  //   spotifyApiMain.skipToNext()
+  //   .then(function() {
+  //     console.log('Skip to next');
+  //   }, function(err) {
+  //     //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+  //     console.log('Something went wrong!', err);
+  //   });
+  // }
   // spotifyApi.next(accessToken, '1298f51696514f4f7d1d66ef9bf96d05ce982731')
-//====================================================================
+  //====================================================================
   // console.log(track);
-    // console.log(tracks);
+  // console.log(tracks);
 
-    // tracks.forEach((item) => {
-    //   if (item.uri === track.uri) {
-    //     setTrackIndex(item.index);
-    //     // console.log(item.index);
-    //   }
-    // });
+  // tracks.forEach((item) => {
+  //   if (item.uri === track.uri) {
+  //     setTrackIndex(item.index);
+  //     // console.log(item.index);
+  //   }
+  // });
 
   // const handlePreviousTrack = (track) => {
   //   if (trackIndex > 0) {
@@ -129,7 +129,21 @@ const PlaylistPage = (playlist) => {
 
   return (
     <div>
-      <Link to="..">Back</Link>
+      <Link to="..">
+        <svg
+          width="25"
+          height="25"
+          viewBox="0 0 24 24"
+          id="left-arrow icon flat-color"
+          data-name="Flat Color"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            id="primary"
+            d="M21,11H5.41l1.3-1.29A1,1,0,0,0,5.29,8.29l-3,3a1,1,0,0,0,0,1.42l3,3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L5.41,13H21a1,1,0,0,0,0-2Z"
+          ></path>
+        </svg>
+      </Link>
       <div>
         <ToastContainer />
         <ul className="" style={{ overflowY: "auto" }}>

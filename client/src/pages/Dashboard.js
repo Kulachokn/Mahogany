@@ -181,7 +181,6 @@ const Dashboard = ({ code }) => {
             />
           )}
         </div>
-        {/* <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}> */}
         <div className={styles.contentWrap}>
           {searchResults.length > 1 ? (
             searchResults.map((track, ind) => (

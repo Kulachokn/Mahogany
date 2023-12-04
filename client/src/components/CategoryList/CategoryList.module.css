@@ -25,3 +25,18 @@
     font-weight: 700;
     text-align: center;
 }
+
+.leftBtn {
+    border: none;
+    background: none;
+}
+
+.iconLeftBtn {
+    width: 25px;
+    height: 25px;
+}
+
+.titleWrap {
+    display: flex;
+    padding-bottom: 20px;
+}
