@@ -14,46 +14,40 @@ const CategoriesList = () => {
   const [playlistsByCategory, setPlaylistsByCategory] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  const storedAccessToken = localStorage.getItem("accessToken");
-      spotifyApi.setAccessToken(storedAccessToken);
+  useEffect(() => {
+    const storedAccessToken = localStorage.getItem("accessToken");
+    spotifyApi.setAccessToken(storedAccessToken);
+  }, []);
 
   useEffect(() => {
-    try {
-      const user = JSON.parse(localStorage.getItem("user"));
-      const country = user.country;
-      spotifyApi
-        .getCategories({
-          country: country,
-        })
-        .then((data) => {
-          console.log(data.body.categories);
-          setCategories(data.body.categories.items);
-        });
-    } catch (error) {
-      console.error("Something went wrong:", error.message);
-    }
+    const fetchData = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const country = user.country;
+        const data = await spotifyApi.getCategories({ country });
+        setCategories(data.body.categories.items);
+      } catch (error) {
+        console.error("Something went wrong:", error.message);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleChooseCategory = async (e) => {
-    let chosenCategory = e.target.dataset.id;
+    let chosenCategory = e.currentTarget.dataset.id;
+    console.log(e.target);
+    console.log(e.currentTarget);
     console.log(chosenCategory);
     try {
-      // const storedAccessToken = localStorage.getItem("accessToken");
-      // spotifyApi.setAccessToken(storedAccessToken);
-
       const user = JSON.parse(localStorage.getItem("user"));
       const country = user.country;
-
-      await spotifyApi
-        .getPlaylistsForCategory(chosenCategory, {
-          country: country,
-          limit: 10,
-          offset: 0,
-        })
-        .then((data) => {
-          // console.log(data.body.playlists.items);
-          setPlaylistsByCategory(data.body.playlists.items);
-        });
+      const data = await spotifyApi.getPlaylistsForCategory(chosenCategory, {
+        country,
+        limit: 10,
+        offset: 0,
+      });
+      setPlaylistsByCategory(data.body.playlists.items);
     } catch (error) {
       console.error("Something went wrong!", error);
     }
@@ -81,11 +75,12 @@ const CategoriesList = () => {
             >
               <Link
                 to="#"
+                data-id={category.id}
                 className={styles.link}
                 onClick={handleChooseCategory}
               >
                 {/* <img src={category.icons[0].url} alt={category.name} width='165' height='80' /> */}
-                <p data-id={category.id} className={styles.name}>{category.name}</p>
+                <p className={styles.name}>{category.name}</p>
               </Link>
             </li>
           ))}
