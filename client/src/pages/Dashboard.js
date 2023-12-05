@@ -131,85 +131,85 @@ const Dashboard = ({ code }) => {
   };
 
   return (
-      <>
-        <div className={styles.controllersWrap}>
+    <>
+      <div className={styles.controllersWrap}>
+        <button
+          type="button"
+          onClick={handleShow}
+          className={styles.addPlaylist}
+          title="Create a Playlist"
+        >
+          <svg
+            className={styles.addPlaylistIcon}
+            viewBox="0 0 32 32"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M15.5 29.5c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM21.938 15.938c0-0.552-0.448-1-1-1h-4v-4c0-0.552-0.447-1-1-1h-1c-0.553 0-1 0.448-1 1v4h-4c-0.553 0-1 0.448-1 1v1c0 0.553 0.447 1 1 1h4v4c0 0.553 0.447 1 1 1h1c0.553 0 1-0.447 1-1v-4h4c0.552 0 1-0.447 1-1v-1z"></path>
+          </svg>
+        </button>
+        <div className={styles.searchWrap}>
           <button
             type="button"
-            onClick={handleShow}
-            className={styles.addPlaylist}
-            title="Create a Playlist"
+            className={styles.searchBtn}
+            onClick={handleButtonClick}
+            title="Search"
           >
             <svg
-              className={styles.addPlaylistIcon}
-              viewBox="0 0 32 32"
-              version="1.1"
+              className={styles.searchIcon}
+              viewBox="0 0 24 24"
+              fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M15.5 29.5c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM21.938 15.938c0-0.552-0.448-1-1-1h-4v-4c0-0.552-0.447-1-1-1h-1c-0.553 0-1 0.448-1 1v4h-4c-0.553 0-1 0.448-1 1v1c0 0.553 0.447 1 1 1h4v4c0 0.553 0.447 1 1 1h1c0.553 0 1-0.447 1-1v-4h4c0.552 0 1-0.447 1-1v-1z"></path>
+              <path
+                d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </button>
-          <div className={styles.searchWrap}>
-            <button
-              type="button"
-              className={styles.searchBtn}
-              onClick={handleButtonClick}
-              title="Search"
-            >
-              <svg
-                className={styles.searchIcon}
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          </div>
-          {formVisible && (
-            <Form.Control
-              type="search"
-              placeholder="Search Song"
-              className={styles.form}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              onBlur={handleInputBlur}
-            />
-          )}
         </div>
-        <div className={styles.contentWrap}>
-          {searchResults.length > 1 ? (
-            searchResults.map((track, ind) => (
-              <TrackSearchResult
-                ind={ind}
-                track={track}
-                key={track.uri}
-                chooseTrack={chooseTrack}
-                addToFavorites={addToFavorites}
-                page="dashboard"
-              />
-            ))
-          ) : (
-            <PlaylistsGallery updateSavedPlaylists={updateSavedPlaylists} />
-          )}
-        </div>
-        <div className="player">
-          <Player
-            accessToken={accessToken ? accessToken : storedAccessToken}
-            trackUri={playingTrack?.uri}
+        {formVisible && (
+          <Form.Control
+            type="search"
+            placeholder="Search Song"
+            className={styles.form}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onBlur={handleInputBlur}
           />
-        </div>
-        <ToastContainer />
-        <CreatePlaylistModal
-          onHide={handleCloseModal}
-          show={show}
-          onFormSubmit={handleFormSubmit}
+        )}
+      </div>
+      <div className={styles.contentWrap}>
+        {searchResults.length > 1 ? (
+          searchResults.map((track, ind) => (
+            <TrackSearchResult
+              ind={ind}
+              track={track}
+              key={track.uri}
+              chooseTrack={chooseTrack}
+              addToFavorites={addToFavorites}
+              page="dashboard"
+            />
+          ))
+        ) : (
+          <PlaylistsGallery updateSavedPlaylists={updateSavedPlaylists} />
+        )}
+      </div>
+      <div className="player">
+        <Player
+          accessToken={accessToken ? accessToken : storedAccessToken}
+          trackUri={playingTrack?.uri}
         />
-      </>
+      </div>
+      <ToastContainer />
+      <CreatePlaylistModal
+        onHide={handleCloseModal}
+        show={show}
+        onFormSubmit={handleFormSubmit}
+      />
+    </>
   );
 };
 

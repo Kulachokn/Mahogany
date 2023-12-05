@@ -54,7 +54,6 @@ const PlaylistsGallery = ({ updateSavedPlaylists }) => {
           offset: 1,
           country: country,
         });
-        console.log(newReleases.body.albums.items);
         setNewReleases(newReleases.body.albums.items);
       } catch (error) {
         console.error("Something went wrong:", error.message);
