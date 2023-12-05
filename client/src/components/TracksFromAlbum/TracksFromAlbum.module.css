@@ -1,7 +1,7 @@
 .item {
   align-items: center;
   display: grid;
-  grid-template-columns: 0.2fr 0.5fr 2fr 2.5fr 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 0.2fr 2.5fr 0.5fr 0.5fr 0.5fr;
   padding: 10px 0;
   padding-right: 20px;
   position: relative;
@@ -20,11 +20,6 @@
   justify-self: center;
 }
 
-.image {
-  height: 64px;
-  width: 64px;
-}
-
 .title {
   display: flex;
   flex-direction: column;
@@ -38,11 +33,6 @@
   font-size: 14px;
   font-weight: 500;
   color: #727474;
-}
-
-.album {
-  font-size: 16px;
-  color: #636464;
 }
 
 .btn {

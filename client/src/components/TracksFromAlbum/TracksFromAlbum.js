@@ -4,9 +4,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 import TrackExtensionMenu from "../TrackExtensionMenu/TrackExtensionMenu";
 import { addTrackToPlaylist } from "../../utils/addTrackToPlaylist";
-import styles from "./TrackSearchResult.module.css";
+import styles from "./TracksFromAlbum.module.css";
 
-const TrackSearchResult = ({
+const TracksFromAlbum = ({
   track,
   ind,
   chooseTrack,
@@ -29,8 +29,8 @@ const TrackSearchResult = ({
   const handleAdd = () => {
     let title = track.title;
     track = track.uri.split(":")[2];
-    addToFavorites(track, title)
-  }
+    addToFavorites(track, title);
+  };
 
   const handleOpenMenu = () => {
     setOpenMenu(true);
@@ -58,12 +58,12 @@ const TrackSearchResult = ({
         onClick={handlePlay}
       >
         <span className={styles.number}>{ind + 1}</span>
-        <img src={track.albumUrl} alt={track.title} className={styles.image} />
         <div className={styles.title}>
-          <h3 className={styles.name}>{track.title ? track.title : track.name}</h3>
+          <h3 className={styles.name}>
+            {track.title ? track.title : track.name}
+          </h3>
           <p className={styles.artist}>{track.artist}</p>
         </div>
-        <p className={styles.album}>{track.album.name ? track.album.name : track.album}</p>
         <p className={styles.duration}>{track.duration}</p>
         {page === "library" ? (
           <button type="button" onClick={handleRemove} className={styles.btn}>
@@ -86,7 +86,7 @@ const TrackSearchResult = ({
         ) : (
           <button type="button" onClick={handleAdd} className={styles.btn}>
             <svg
-            className={styles.addIcon}
+              className={styles.addIcon}
               fill="#109BA8"
               viewBox="0 0 24 24"
               id="add-playlist"
@@ -167,4 +167,4 @@ const TrackSearchResult = ({
   );
 };
 
-export default TrackSearchResult;
+export default TracksFromAlbum;
