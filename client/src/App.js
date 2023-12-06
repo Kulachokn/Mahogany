@@ -7,7 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Library from "./pages/Library";
 
 import PlaylistPage from "./pages/PlaylistPage";
-// import AlbumPage from "./pages/AlbumPage";
+import AlbumPage from "./pages/AlbumPage";
 
 const code = new URLSearchParams(window.location.search).get('code');
 
@@ -18,8 +18,8 @@ const router = createBrowserRouter([
     // errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <Dashboard code={code} /> },
-      // { path: "/:albumId", element: <AlbumPage code={code} /> },
-      { path: "/:playlistId", element: <PlaylistPage code={code} /> },
+      { path: "albums/:albumId", element: <AlbumPage code={code} /> },
+      { path: "playlists/:playlistId", element: <PlaylistPage code={code} /> },
       { path: "/library", element: <Library code={code} /> },
      
     ],

@@ -20,33 +20,8 @@ const AlbumPage = () => {
   const accessToken = localStorage.getItem("accessToken");
   spotifyApi.setAccessToken(accessToken);
 
-  // useEffect(() => {
-  //   spotifyApi.getPlaylist(params.playlistId).then((data) => {
-  //     const convertedDuration = (duration) => convertTrackDuration(duration);
-
-  //     const trackResult = data.body.tracks.items.map((item, ind) => {
-  //       const smallestAlbumImage = getSmallestAlbumImage(item.track.album);
-  //       const getArtists = item.track.artists
-  //         .map((artist) => artist.name)
-  //         .join(", ");
-
-  //       return {
-  //         index: ind,
-  //         artist: getArtists,
-  //         title: item.track.name,
-  //         uri: item.track.uri,
-  //         albumUrl: smallestAlbumImage.url,
-  //         album: item.track.album.name,
-  //         duration: convertedDuration(item.track.duration_ms),
-  //       };
-  //     });
-  //     setTracks(trackResult);
-  //   });
-  // }, [params.playlistId]);
-
   useEffect(() => {
     spotifyApi.getAlbum(params.albumId).then((data) => {
-      console.log("Album information", data.body.tracks);
       const convertedDuration = (duration) => convertTrackDuration(duration);
 
       const trackResult = data.body.tracks.items.map((item, ind) => {
@@ -57,7 +32,6 @@ const AlbumPage = () => {
           artist: getArtists,
           title: item.name,
           uri: item.uri,
-          //   albumUrl: smallestAlbumImage.url,
           album: item.name,
           duration: convertedDuration(item.duration_ms),
         };

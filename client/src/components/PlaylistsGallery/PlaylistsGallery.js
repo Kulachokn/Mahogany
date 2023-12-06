@@ -68,15 +68,15 @@ const PlaylistsGallery = ({ updateSavedPlaylists }) => {
       <CategoriesList  />
       <div className={styles.wrap}>
         <h2 className={styles.title}>My Playlists</h2>
-        {userPlaylists && <PlaylistCarousel playlists={userPlaylists} />}
+        {userPlaylists && <PlaylistCarousel type='playlist' playlists={userPlaylists} />}
       </div>
       <div className={styles.wrap}>
         <h2 className={styles.title}>Featured Playlists</h2>
-        <PlaylistCarousel playlists={featuredPlaylists} />
+        <PlaylistCarousel type='playlist' playlists={featuredPlaylists} />
       </div>
       <div className={styles.wrap}>
         <h2 className={styles.title}>New Releases</h2>
-        <PlaylistCarousel playlists={newReleases} />
+        <PlaylistCarousel type='album' playlists={newReleases} />
       </div>
     </>
   );

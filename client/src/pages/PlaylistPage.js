@@ -87,7 +87,7 @@ const PlaylistPage = () => {
       </Link>
       <div>
         <ToastContainer />
-        <ul className="" style={{ overflowY: "auto" }}>
+        <ul className="trackList" style={{ overflowY: "auto" }}>
           {tracks.map((track, ind) => (
             <TrackSearchResult
               ind={ind}

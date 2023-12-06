@@ -1,10 +1,10 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-import PlaylistCard from "../PlaylistCard/PlaylistCard";
+import PlaylistCard from "../MediaCard/MediaCard";
 import styles from './Carousel.module.css';
 
-const PlaylistCarousel = ({ playlists }) => {
+const PlaylistCarousel = ({ playlists, type }) => {
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -28,7 +28,7 @@ const PlaylistCarousel = ({ playlists }) => {
   return (
     <Carousel responsive={responsive} infinite={true} itemClass={styles.itemCard}>
       {playlists.map((playlist) => (
-        <PlaylistCard playlist={playlist} key={playlist.id} />
+        <PlaylistCard type={type} playlist={playlist} key={playlist.id} />
       ))}
     </Carousel>
   );
