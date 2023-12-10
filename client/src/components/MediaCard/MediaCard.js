@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import styles from "./PlaylistCard.module.css";
+import styles from "./MediaCard.module.css";
 
 const PlaylistCard = ({ playlist, type }) => {
   let playlistImg = "";
