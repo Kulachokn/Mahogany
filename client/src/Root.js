@@ -3,10 +3,12 @@ import Navigation from "./components/Navigation";
 import Header from "./components/Header/Header";
 import "./index.css";
 import styles from './Root.module.css';
+import { useTheme } from './ThemeContext';
 
 const RootLayout = ({ code }) => {
+  const isDarkMode = useTheme();
   return (
-    <>
+    <div className={isDarkMode ? 'themeDark' : 'themeLight'}>
       <Header />
       <div className={styles.wrapper}>
         <div className={styles.sidenav}>
@@ -16,7 +18,7 @@ const RootLayout = ({ code }) => {
           <Outlet code={code} />
         </main>
       </div>
-    </>
+    </div>
   );
 };
 

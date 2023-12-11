@@ -6,17 +6,18 @@
   padding-right: 20px;
   position: relative;
   cursor: pointer;
+  /* background-color: var(--bg-card); */
 }
 
 .item:hover {
-  box-shadow: 0px 0px 10px 10px rgba(255, 255, 255, 0.5);
-  background-color: #f4fbfb;
+  /* box-shadow: 0px 0px 10px 10px rgba(255, 255, 255, 0.5); */
+  background-color: var(--bg-card-hover);
 }
 
 .number {
   font-size: 18px;
   font-weight: 600;
-  color: #727474;
+  color: var(--color-secondary);
   justify-self: center;
 }
 
@@ -32,17 +33,22 @@
 
 .name {
   font-size: 18px;
+  color: var(--font-color);
 }
 
 .artist {
   font-size: 14px;
   font-weight: 500;
-  color: #727474;
+  color: var(--color-secondary);
 }
 
 .album {
   font-size: 16px;
-  color: #636464;
+  color: var(--color-secondary);
+}
+
+.duration {
+  color: var(--color-secondary);
 }
 
 .btn {

@@ -22,13 +22,22 @@
   width: 330px;
   border: none;
   border-bottom: 2px solid #109ba8;
+  background-color: var(--bg-color);
+  color: var(--font-color);
 }
 
-/* .form:focus {
-    outline-style: none;
-    outline-color: transparent;
-    outline: none;
-} */
+.form::placeholder {
+  color: var(--font-color);
+}
+
+.form:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px transparent;
+  border: 2px solid transparent;
+  border-bottom: 2px solid var(--color-accent);
+  background-color: var(--bg-color);
+  color: var(--font-color);
+}
 
 .searchBtn {
   border: none;
@@ -43,5 +52,5 @@
 }
 
 .contentWrap {
-  padding: 20px 0 80px 0 ;
+  padding: 20px 0 80px 0;
 }

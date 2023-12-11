@@ -76,7 +76,7 @@ const CategoriesList = () => {
               ></path>
             </svg>
           </button>
-          <h3>{categoryName && categoryName}</h3>
+          <h3 className={styles.title}>{categoryName}</h3>
           <PlaylistCarousel playlists={playlistsByCategory} />
         </>
       ) : (

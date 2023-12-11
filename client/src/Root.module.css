@@ -1,5 +1,6 @@
 .wrapper {
   padding-top: 10px;
+  background-color: var(--bg-color);
 }
 
 .sidenav {
@@ -15,12 +16,12 @@
 .sidenav a {
   padding: 6px 8px 6px 16px;
   font-size: 16px;
-  color: #727474;
+  color: var(--color-secondary);
   display: block;
 }
 
 .sidenav a:hover {
-  color: #0d818c;
+  color: var(--color-accent);
 }
 
 .main {

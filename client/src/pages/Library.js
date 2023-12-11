@@ -90,7 +90,7 @@ const Library = () => {
 
   return (
     <div>
-      <h1>My Library</h1>
+      <h1 className="title">My Library</h1>
       <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
         {loading ? (
           <MutatingDots

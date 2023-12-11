@@ -74,6 +74,7 @@ const PlaylistPage = () => {
         <svg
           width="25"
           height="25"
+          className="leftArrow"
           viewBox="0 0 24 24"
           id="left-arrow icon flat-color"
           data-name="Flat Color"
