@@ -1,20 +1,18 @@
 .menuWrap {
-    position: absolute;
-    top: 56px;
-    right: 50px;
-    background-color: #A2A4A4;
-    /* background-color: #109BA8; */
-    z-index: 100;
-    border-radius: 4px;
+  position: absolute;
+  top: 56px;
+  right: 50px;
+  background-color: #a2a4a4;
+  z-index: 100;
+  border-radius: 4px;
 }
 
 .item {
-    padding: 10px 10px;
+  padding: 10px 10px;
 }
 
 .item:hover {
-    /* opacity: 0.5; */
-    color: #ffffff;
-    /* background-color: #A2A4A4; */
-    /* background-color: #65BBC3; */
+  color: #ffffff;
 }
+
+

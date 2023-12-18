@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import TrackExtensionMenu from "../TrackExtensionMenu/TrackExtensionMenu";
+import PlaylistsMenu from "../PlaylistsMenu/PlaylistsMenu";
 import { addTrackToPlaylist } from "../../utils/addTrackToPlaylist";
 import styles from "./TracksFromAlbum.module.css";
 
@@ -160,7 +160,7 @@ const TracksFromAlbum = ({
             />
           </svg>
         </button>
-        {openMenu && <TrackExtensionMenu choosePlaylist={choosePlaylist} />}
+        {openMenu && <PlaylistsMenu choosePlaylist={choosePlaylist} />}
       </div>
       <ToastContainer />
     </>

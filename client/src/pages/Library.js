@@ -17,6 +17,7 @@ const Library = () => {
   const [savedTracks, setSavedTracks] = useState([]);
   const [playingTrack, setPlayingTrack] = useState(null);
   const [loading, setLoading] = useState(true);
+  // const [artistsId, setArtistsId] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +37,12 @@ const Library = () => {
         });
 
         const convertedDuration = (duration) => convertTrackDuration(duration);
+
+// console.log(response.body.items);
+// const artistsIdList = response.body.items.map(item => item.track.artists[0].id);
+// localStorage.setItem('artistsId', JSON.stringify(artistsIdList))
+// setArtistsId(artistsIdList);
+// console.log(artistsIdList);
 
         const tracks = response.body.items.map((item) => {
           const smallestAlbumImage = getSmallestAlbumImage(item.track.album);

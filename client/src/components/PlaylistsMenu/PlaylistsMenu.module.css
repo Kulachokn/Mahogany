@@ -1,0 +1,15 @@
+.playlistMenu {
+    position: absolute;
+    top: 148px;
+    right: 180px;
+    background-color: #a2a4a4;
+    z-index: 100;
+}
+
+.item {
+    padding: 10px 10px;
+}
+
+.item:hover {
+    color: #ffffff;
+}

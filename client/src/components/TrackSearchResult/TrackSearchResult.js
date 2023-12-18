@@ -29,11 +29,7 @@ const TrackSearchResult = ({
   const handleAdd = () => {
     let title = track.title;
     track = track.uri.split(":")[2];
-    addToFavorites(track, title)
-  }
-
-  const handleOpenMenu = () => {
-    setOpenMenu(true);
+    addToFavorites(track, title);
   };
 
   const choosePlaylist = (playlistId) => {
@@ -51,19 +47,32 @@ const TrackSearchResult = ({
     setOpenMenu(false);
   };
 
+  const handleCloseMenu = (event) => {
+    if (event.key === "Escape") {
+      setOpenMenu(false);
+    }
+  };
+
+  window.addEventListener("keydown", handleCloseMenu);
+
+  const handleOpenMenu = (event) => {
+    setOpenMenu(true);
+  };
+
   return (
     <>
-      <div
-        className={styles.item}
-        onClick={handlePlay}
-      >
+      <div className={styles.item} onClick={handlePlay}>
         <span className={styles.number}>{ind + 1}</span>
         <img src={track.albumUrl} alt={track.title} className={styles.image} />
         <div className={styles.title}>
-          <h3 className={styles.name}>{track.title ? track.title : track.name}</h3>
+          <h3 className={styles.name}>
+            {track.title ? track.title : track.name}
+          </h3>
           <p className={styles.artist}>{track.artist}</p>
         </div>
-        <p className={styles.album}>{track.album.name ? track.album.name : track.album}</p>
+        <p className={styles.album}>
+          {track.album.name ? track.album.name : track.album}
+        </p>
         <p className={styles.duration}>{track.duration}</p>
         {page === "library" ? (
           <button type="button" onClick={handleRemove} className={styles.btn}>
@@ -86,7 +95,7 @@ const TrackSearchResult = ({
         ) : (
           <button type="button" onClick={handleAdd} className={styles.btn}>
             <svg
-            className={styles.addIcon}
+              className={styles.addIcon}
               fill="#109BA8"
               viewBox="0 0 24 24"
               id="add-playlist"
@@ -135,7 +144,11 @@ const TrackSearchResult = ({
             </svg>
           </button>
         )}
-        <button type="button" onClick={handleOpenMenu} className={styles.btn}>
+        <button
+          type="button"
+          onClick={handleOpenMenu}
+          className={`${styles.btn} ${styles.moduleOpen}`}
+        >
           <svg
             className={styles.addIcon}
             viewBox="0 0 1024 1024"
