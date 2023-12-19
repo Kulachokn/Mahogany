@@ -91,6 +91,13 @@ const AlbumPage = () => {
               chooseTrack={chooseTrack}
               addToFavorites={addToFavorites}
             />
+            //   <TrackSearchResult
+            //   ind={ind}
+            //   track={track}
+            //   key={track.uri}
+            //   chooseTrack={chooseTrack}
+            //   addToFavorites={addToFavorites}
+            // />
           ))}
         </ul>
       </div>

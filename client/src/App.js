@@ -5,9 +5,10 @@ import RootLayout from "./Root";
 import Login from './pages/Login';
 import Dashboard from "./pages/Dashboard";
 import Library from "./pages/Library";
-
 import PlaylistPage from "./pages/PlaylistPage";
 import AlbumPage from "./pages/AlbumPage";
+import ArtistPage from "./pages/ArtistPage";
+
 import { ThemeProvider } from './ThemeContext';
 
 const code = new URLSearchParams(window.location.search).get('code');
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
       { path: "albums/:albumId", element: <AlbumPage code={code} /> },
       { path: "playlists/:playlistId", element: <PlaylistPage code={code} /> },
       { path: "/library", element: <Library code={code} /> },
-     
+      { path: "/artists/:artistId", element: <ArtistPage code={code} /> },
     ],
   },
 ]);

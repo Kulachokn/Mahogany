@@ -1,7 +1,7 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-import PlaylistCard from "../MediaCard/MediaCard";
+import MediaCard from "../MediaCard/MediaCard";
 import styles from './Carousel.module.css';
 
 const PlaylistCarousel = ({ playlists, type }) => {
@@ -28,7 +28,7 @@ const PlaylistCarousel = ({ playlists, type }) => {
   return (
     <Carousel responsive={responsive} infinite={true} itemClass={styles.itemCard}>
       {playlists.map((playlist) => (
-        <PlaylistCard type={type} playlist={playlist} key={playlist.id} />
+        <MediaCard type={type} playlist={playlist} key={playlist.id} />
       ))}
     </Carousel>
   );

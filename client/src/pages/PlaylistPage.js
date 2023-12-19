@@ -5,8 +5,6 @@ import { ToastContainer, toast } from "react-toastify";
 
 import Player from "../components/Player";
 import TrackSearchResult from "../components/TrackSearchResult/TrackSearchResult";
-import { convertTrackDuration } from "../utils/convertTrackDuration";
-import { getSmallestAlbumImage } from "../utils/getSmallestAlbumImage";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
@@ -23,24 +21,7 @@ const PlaylistPage = () => {
 
   useEffect(() => {
     spotifyApi.getPlaylist(params.playlistId).then((data) => {
-      const convertedDuration = (duration) => convertTrackDuration(duration);
-
-      const trackResult = data.body.tracks.items.map((item, ind) => {
-        const smallestAlbumImage = getSmallestAlbumImage(item.track.album);
-        const getArtists = item.track.artists
-          .map((artist) => artist.name)
-          .join(", ");
-
-        return {
-          index: ind,
-          artist: getArtists,
-          title: item.track.name,
-          uri: item.track.uri,
-          albumUrl: smallestAlbumImage.url,
-          album: item.track.album.name,
-          duration: convertedDuration(item.track.duration_ms),
-        };
-      });
+      const trackResult = data.body.tracks.items.map((elem) => elem.track);
       setTracks(trackResult);
     });
   }, [params.playlistId]);
@@ -93,7 +74,7 @@ const PlaylistPage = () => {
             <TrackSearchResult
               ind={ind}
               track={track}
-              key={track.uri}
+              key={track.id}
               chooseTrack={chooseTrack}
               addToFavorites={addToFavorites}
             />

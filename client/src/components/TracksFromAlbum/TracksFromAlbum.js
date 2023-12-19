@@ -60,7 +60,7 @@ const TracksFromAlbum = ({
         <span className={styles.number}>{ind + 1}</span>
         <div className={styles.title}>
           <h3 className={styles.name}>
-            {track.title ? track.title : track.name}
+            {track.name}
           </h3>
           <p className={styles.artist}>{track.artist}</p>
         </div>

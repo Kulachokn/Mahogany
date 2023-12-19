@@ -4,6 +4,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 import TrackExtensionMenu from "../TrackExtensionMenu/TrackExtensionMenu";
 import { addTrackToPlaylist } from "../../utils/addTrackToPlaylist";
+import { getSmallestAlbumImage } from "../../utils/getSmallestAlbumImage";
+import { convertTrackDuration } from "../../utils/convertTrackDuration";
 import styles from "./TrackSearchResult.module.css";
 
 const TrackSearchResult = ({
@@ -59,21 +61,25 @@ const TrackSearchResult = ({
     setOpenMenu(true);
   };
 
+  const artistsName = track.artists.map((artist) => artist.name).join(", ");
+  const smallestAlbumImage = getSmallestAlbumImage(track.album);
+  const convertedDuration = convertTrackDuration(track.duration_ms);
+
   return (
     <>
       <div className={styles.item} onClick={handlePlay}>
         <span className={styles.number}>{ind + 1}</span>
-        <img src={track.albumUrl} alt={track.title} className={styles.image} />
+        <img
+          src={smallestAlbumImage.url}
+          alt={track.title}
+          className={styles.image}
+        />
         <div className={styles.title}>
-          <h3 className={styles.name}>
-            {track.title ? track.title : track.name}
-          </h3>
-          <p className={styles.artist}>{track.artist}</p>
+          <h3 className={styles.name}>{track.name}</h3>
+          <p className={styles.artist}>{artistsName}</p>
         </div>
-        <p className={styles.album}>
-          {track.album.name ? track.album.name : track.album}
-        </p>
-        <p className={styles.duration}>{track.duration}</p>
+        <p className={styles.album}>{track.album.name}</p>
+        <p className={styles.duration}>{convertedDuration}</p>
         {page === "library" ? (
           <button type="button" onClick={handleRemove} className={styles.btn}>
             <svg
@@ -173,7 +179,9 @@ const TrackSearchResult = ({
             />
           </svg>
         </button>
-        {openMenu && <TrackExtensionMenu choosePlaylist={choosePlaylist} />}
+        {openMenu && (
+          <TrackExtensionMenu track={track} choosePlaylist={choosePlaylist} />
+        )}
       </div>
       <ToastContainer />
     </>

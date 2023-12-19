@@ -6,8 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 import TrackSearchResult from "../components/TrackSearchResult/TrackSearchResult";
 import Player from "../components/Player";
-import { getSmallestAlbumImage } from "../utils/getSmallestAlbumImage";
-import { convertTrackDuration } from "../utils/convertTrackDuration";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
@@ -36,28 +34,8 @@ const Library = () => {
           offset: 1,
         });
 
-        const convertedDuration = (duration) => convertTrackDuration(duration);
-
-// console.log(response.body.items);
-// const artistsIdList = response.body.items.map(item => item.track.artists[0].id);
-// localStorage.setItem('artistsId', JSON.stringify(artistsIdList))
-// setArtistsId(artistsIdList);
-// console.log(artistsIdList);
-
         const tracks = response.body.items.map((item) => {
-          const smallestAlbumImage = getSmallestAlbumImage(item.track.album);
-          const getArtists = item.track.artists
-            .map((artist) => artist.name)
-            .join(", ");
-
-          return {
-            artist: getArtists,
-            title: item.track.name,
-            uri: item.track.uri,
-            albumUrl: smallestAlbumImage.url,
-            album: item.track.album.name,
-            duration: convertedDuration(item.track.duration_ms),
-          };
+          return item.track;
         });
 
         setSavedTracks(tracks);

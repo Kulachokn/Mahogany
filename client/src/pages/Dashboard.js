@@ -8,8 +8,6 @@ import useAuth from "../useAuth";
 import TrackSearchResult from "../components/TrackSearchResult/TrackSearchResult";
 import Player from "../components/Player";
 import CreatePlaylistModal from "../components/CreatePlaylistModal/CreatePlaylistModal";
-import { getSmallestAlbumImage } from "../utils/getSmallestAlbumImage";
-import { convertTrackDuration } from "../utils/convertTrackDuration";
 import { getUserProfile } from "../utils/getUserProfile";
 import styles from "./Dashboard.module.css";
 
@@ -48,26 +46,9 @@ const Dashboard = ({ code }) => {
       // const storedAccessToken = localStorage.getItem("accessToken");
       spotifyApi.setAccessToken(storedAccessToken);
       console.log("searchRequest");
-      spotifyApi.searchTracks(search).then((response) => {
-        const convertedDuration = (duration) => convertTrackDuration(duration);
-        const tracks = response.body.tracks.items.map((item) => {
-          const smallestAlbumImage = getSmallestAlbumImage(item.album);
-          const getArtists = item.artists
-            .map((artist) => artist.name)
-            .join(", ");
-
-          return {
-            artist: getArtists,
-            title: item.name,
-            uri: item.uri,
-            albumUrl: smallestAlbumImage.url,
-            album: item.album.name,
-            duration: convertedDuration(item.duration_ms),
-          };
-        });
-
-        setSearchResults(tracks);
-      });
+      spotifyApi
+        .searchTracks(search)
+        .then((response) => setSearchResults(response.body.tracks.items));
     } catch (error) {
       console.error("There are no results for your query", error);
       toast.error("There are no results for your query");
