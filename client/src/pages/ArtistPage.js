@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import PlaylistCarousel from "../components/Carousel/Carousel";
 import TrackSearchResult from "../components/TrackSearchResult/TrackSearchResult";
 import ArtistCard from "../components/ArtistCard/ArtistCard";
+import styles from "./ArtistPage.module.css";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
@@ -21,21 +22,26 @@ const ArtistPage = () => {
   const [loading, setLoading] = useState(true);
   const [popularTracks, setPopularTracks] = useState([]);
   const [relatedArtists, setRelatedArtists] = useState([]);
+  const [showMoreCards, setShowMoreCards] = useState(false);
 
   const accessToken = localStorage.getItem("accessToken");
   spotifyApi.setAccessToken(accessToken);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [artistId]);
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         await spotifyApi.getArtist(artistId).then((data) => {
-        //   const getBiggestArtistImage = (data) => {
-        //     console.log(data.body);
-        //     return data.body.images.reduce((biggest, picture) => {
-        //       if (picture.height > biggest.height) return picture;
-        //       return biggest;
-        //     }, data.body.images[0]);
-        //   };
+          //   const getBiggestArtistImage = (data) => {
+          //     console.log(data.body);
+          //     return data.body.images.reduce((biggest, picture) => {
+          //       if (picture.height > biggest.height) return picture;
+          //       return biggest;
+          //     }, data.body.images[0]);
+          //   };
           const artistGenre = data.body.genres.map((genre) => genre).join(", ");
           const artist = {
             // image: getBiggestArtistImage(data).url,
@@ -135,6 +141,10 @@ const ArtistPage = () => {
     padding: "20px",
   };
 
+  const toggleSeeMoreCards = () => {
+    setShowMoreCards(!showMoreCards);
+  };
+
   return (
     <div>
       {loading ? (
@@ -152,7 +162,7 @@ const ArtistPage = () => {
       ) : (
         <div>
           <div style={backgroundStyle}>
-            <h1>{artistInfo.name ? artistInfo.name : 'artist'}</h1>
+            <h1>{artistInfo.name ? artistInfo.name : "artist"}</h1>
             <p>{artistInfo.followers} followers</p>
             <p>genres: {artistInfo.genres}</p>
           </div>
@@ -171,11 +181,18 @@ const ArtistPage = () => {
             </div>
           )}
           {relatedArtists && (
-            <div>
+            <div className={styles.relatedArtistsWrap}>
               <h2>Fans also like</h2>
-              {relatedArtists.map((artist, ind) => (
-                <ArtistCard artist={artist} ind={ind} key={artist.uri} />
-              ))}
+              <button onClick={toggleSeeMoreCards}>
+                {showMoreCards ? "See Less" : "See More"}
+              </button>
+              <ul className={styles.relatedArtistsList}>
+                {relatedArtists
+                  .slice(0, showMoreCards ? relatedArtists.length : 4)
+                  .map((artist, ind) => (
+                    <ArtistCard artist={artist} ind={ind} key={artist.uri} />
+                  ))}
+              </ul>
             </div>
           )}
         </div>
