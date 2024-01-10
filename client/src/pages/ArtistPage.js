@@ -10,6 +10,7 @@ import PlaylistCarousel from "../components/Carousel/Carousel";
 import TrackSearchResult from "../components/TrackSearchResult/TrackSearchResult";
 import ArtistCard from "../components/ArtistCard/ArtistCard";
 import styles from "./ArtistPage.module.css";
+import Player from "../components/Player";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
@@ -23,6 +24,7 @@ const ArtistPage = () => {
   const [popularTracks, setPopularTracks] = useState([]);
   const [relatedArtists, setRelatedArtists] = useState([]);
   const [showMoreCards, setShowMoreCards] = useState(false);
+  const [playingTrack, setPlayingTrack] = useState();
 
   const accessToken = localStorage.getItem("accessToken");
   spotifyApi.setAccessToken(accessToken);
@@ -145,8 +147,12 @@ const ArtistPage = () => {
     setShowMoreCards(!showMoreCards);
   };
 
+  const chooseTrack = (track) => {
+    setPlayingTrack(track);
+  };
+
   return (
-    <div>
+    <>
       {loading ? (
         <MutatingDots
           height="100"
@@ -160,7 +166,7 @@ const ArtistPage = () => {
           visible={true}
         />
       ) : (
-        <div>
+        <div className={styles.wrapper}>
           <div style={backgroundStyle}>
             <h1>{artistInfo.name ? artistInfo.name : "artist"}</h1>
             <p>{artistInfo.followers} followers</p>
@@ -168,21 +174,21 @@ const ArtistPage = () => {
           </div>
           {popularTracks && (
             <div>
-              <h2>Popular Tracks</h2>
+              <h2 className="title">Popular Tracks</h2>
               {popularTracks.map((track, ind) => (
-                <TrackSearchResult ind={ind} track={track} key={track.uri} />
+                <TrackSearchResult ind={ind} track={track} key={track.uri} chooseTrack={chooseTrack} />
               ))}
             </div>
           )}
           {artistAlbums && (
             <div>
-              <h2>Discography</h2>
+              <h2 className="title">Discography</h2>
               <PlaylistCarousel type="album" playlists={artistAlbums} />
             </div>
           )}
           {relatedArtists && (
             <div className={styles.relatedArtistsWrap}>
-              <h2>Fans also like</h2>
+              <h2 className="title">Fans also like</h2>
               <button onClick={toggleSeeMoreCards}>
                 {showMoreCards ? "See Less" : "See More"}
               </button>
@@ -197,8 +203,14 @@ const ArtistPage = () => {
           )}
         </div>
       )}
+       <div className="player">
+        <Player
+          accessToken={accessToken}
+          trackUri={playingTrack?.uri}
+        />
+      </div>
       <ToastContainer />
-    </div>
+    </>
   );
 };
 
