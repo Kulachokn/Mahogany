@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "./ArtistCard.module.css";
 
 const ArtistCard = ({ artist }) => {
-  console.log(artist);
+  // console.log(artist);
 
   return (
     <li className={styles.item}>

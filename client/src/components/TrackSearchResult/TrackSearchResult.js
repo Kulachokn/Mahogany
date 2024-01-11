@@ -1,4 +1,6 @@
 import { useState } from "react";
+// import { useParams } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -17,6 +19,7 @@ const TrackSearchResult = ({
   page,
 }) => {
   const [openMenu, setOpenMenu] = useState(false);
+  // const { artistId } = useParams();
 
   const handlePlay = () => {
     chooseTrack(track);
@@ -64,7 +67,7 @@ const TrackSearchResult = ({
   const artistsName = track.artists.map((artist) => artist.name).join(", ");
   const smallestAlbumImage = getSmallestAlbumImage(track.album);
   const convertedDuration = convertTrackDuration(track.duration_ms);
-
+// console.log(track);
   return (
     <>
       <div className={styles.item} onClick={handlePlay}>
@@ -76,6 +79,7 @@ const TrackSearchResult = ({
         />
         <div className={styles.title}>
           <h3 className={styles.name}>{track.name}</h3>
+          {/* <Link to={`/artists/${artistId}`} className={styles.artist}>{artistsName}</Link> */}
           <p className={styles.artist}>{artistsName}</p>
         </div>
         <p className={styles.album}>{track.album.name}</p>

@@ -1,9 +1,29 @@
 .wrapper {
-    padding-bottom: 100px;
+  padding-bottom: 100px;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.headWrap {
+    display: flex;
+}
+
+.moreBtn {
+    margin-left: auto;
+    border: none;
+    background: none;
+    color: var(--color-accent);
+}
+
+.moreBtn:hover,
+.moreBtn:focus {
+    text-decoration: underline var(--color-accent);
 }
 
 .relatedArtistsList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
 }

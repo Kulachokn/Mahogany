@@ -167,31 +167,38 @@ const ArtistPage = () => {
         />
       ) : (
         <div className={styles.wrapper}>
-          <div style={backgroundStyle}>
+          <div style={backgroundStyle} className={styles.section}>
             <h1>{artistInfo.name ? artistInfo.name : "artist"}</h1>
             <p>{artistInfo.followers} followers</p>
             <p>genres: {artistInfo.genres}</p>
           </div>
           {popularTracks && (
-            <div>
+            <div className={styles.section}>
               <h2 className="title">Popular Tracks</h2>
               {popularTracks.map((track, ind) => (
-                <TrackSearchResult ind={ind} track={track} key={track.uri} chooseTrack={chooseTrack} />
+                <TrackSearchResult
+                  ind={ind}
+                  track={track}
+                  key={track.uri}
+                  chooseTrack={chooseTrack}
+                />
               ))}
             </div>
           )}
           {artistAlbums && (
-            <div>
+            <div className={styles.section}>
               <h2 className="title">Discography</h2>
               <PlaylistCarousel type="album" playlists={artistAlbums} />
             </div>
           )}
           {relatedArtists && (
             <div className={styles.relatedArtistsWrap}>
-              <h2 className="title">Fans also like</h2>
-              <button onClick={toggleSeeMoreCards}>
-                {showMoreCards ? "See Less" : "See More"}
-              </button>
+              <div className={styles.headWrap}>
+                <h2 className="title">Fans also like</h2>
+                <button onClick={toggleSeeMoreCards} className={styles.moreBtn}>
+                  {showMoreCards ? "See Less" : "See More"}
+                </button>
+              </div>
               <ul className={styles.relatedArtistsList}>
                 {relatedArtists
                   .slice(0, showMoreCards ? relatedArtists.length : 4)
@@ -203,11 +210,8 @@ const ArtistPage = () => {
           )}
         </div>
       )}
-       <div className="player">
-        <Player
-          accessToken={accessToken}
-          trackUri={playingTrack?.uri}
-        />
+      <div className="player">
+        <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
       </div>
       <ToastContainer />
     </>

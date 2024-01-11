@@ -49,6 +49,7 @@ a {
 
 .title {
   color: var(--font-color);
+  margin-bottom: 20px;
 }
 
 .themeLight {
