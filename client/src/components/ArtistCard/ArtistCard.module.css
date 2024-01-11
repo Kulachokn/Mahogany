@@ -1,14 +1,53 @@
+.item {
+    width: 230px;
+    background-color: var(--bg-card);
+    padding-top: 20px;
+    border-radius: 12px;
+}
+
+.item:hover,
+.item:focus {
+  background-color: var(--bg-card-hover);
+}
+
+.item:hover .link {
+    display: inline-flex;
+    position: absolute;
+    right: 30px;
+    bottom: 85px;
+    border-radius: 50%;
+}
+
+.link {
+    display: none;
+    background-color: var(--color-accent);
+}
+
+.playIcon {
+    width: 50px;
+    height: 50px;
+    fill: #fff;
+}
+
 .imgWrap {
     position: relative;
     width: 150px;
     height: 150px;
     overflow: hidden;
     border-radius: 50%;
+    display: flex;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .img {
   width: 100%;
   height: auto;
+}
+
+.thumb {
+    position: relative;
+    padding: 15px 20px;
 }
 
 .title {
