@@ -2,7 +2,7 @@
   position: absolute;
   top: 56px;
   right: 50px;
-  background-color: #a2a4a4;
+  background-color: var(--ext-menu-bg);
   z-index: 100;
   border-radius: 4px;
 }
@@ -11,8 +11,18 @@
   padding: 10px 10px;
 }
 
-.item:hover {
-  color: #ffffff;
+.item a,
+.item button {
+  color: var(--font-color);
+  background-color: var(--ext-menu-bg);
+  border: none;
 }
 
+.item:hover,
+.item:hover .goToLink {
+  background-color: var(--bg-card-hover);
+}
 
+.dropdown-menu.show {
+  padding: 0;
+}

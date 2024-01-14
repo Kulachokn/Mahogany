@@ -61,6 +61,7 @@ a {
   --bg-card: #f3f6f7;
   --bg-card-hover: #eaebec;
   --bg-color: #fafafa;
+  --ext-menu-bg: #e1e0e0;
 }
 
 .themeDark {
@@ -72,4 +73,5 @@ a {
   --bg-card: rgba(63, 64, 64, 0.1);
   --bg-card-hover: rgba(63, 64, 64, 0.2);
   --bg-color: #191a1a;
+  --ext-menu-bg: #3F4040;
 }

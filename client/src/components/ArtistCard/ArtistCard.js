@@ -3,11 +3,9 @@ import { Link } from "react-router-dom";
 import styles from "./ArtistCard.module.css";
 
 const ArtistCard = ({ artist }) => {
-  // console.log(artist);
 
   return (
     <li className={styles.item}>
-      {/* <Link to={`/artists/${artist.id}`} className={styles.link}> */}
       <div className={styles.imgWrap}>
         <img
           src={artist.images[2].url}
