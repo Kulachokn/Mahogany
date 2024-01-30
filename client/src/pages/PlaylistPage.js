@@ -51,7 +51,7 @@ const PlaylistPage = () => {
 
   return (
     <div>
-      <Link to="..">
+      <Link to=".." className="leftArrowLink">
         <svg
           width="25"
           height="25"
@@ -67,9 +67,9 @@ const PlaylistPage = () => {
           ></path>
         </svg>
       </Link>
-      <div>
+      <div className="listWrap">
         <ToastContainer />
-        <ul className="trackList" style={{ overflowY: "auto" }}>
+        <ul className="trackList">
           {tracks.map((track, ind) => (
             <TrackSearchResult
               ind={ind}

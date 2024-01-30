@@ -67,7 +67,7 @@ const TrackSearchResult = ({
   const artistsName = track.artists.map((artist) => artist.name).join(", ");
   const smallestAlbumImage = getSmallestAlbumImage(track.album);
   const convertedDuration = convertTrackDuration(track.duration_ms);
-// console.log(track);
+  // console.log(track);
   return (
     <>
       <div className={styles.item} onClick={handlePlay}>
@@ -155,6 +155,7 @@ const TrackSearchResult = ({
           </button>
         )}
         <button
+          title="More options"
           type="button"
           onClick={handleOpenMenu}
           className={`${styles.btn} ${styles.moduleOpen}`}

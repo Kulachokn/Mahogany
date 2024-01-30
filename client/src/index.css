@@ -38,6 +38,13 @@ a {
   background: rgba(36, 44, 55, 0.5);
 }
 
+.listWrap {
+  margin: 0;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
 .trackList {
   padding-bottom: 80px;
 }
@@ -45,6 +52,11 @@ a {
 .leftArrow {
   fill: var(--color-accent);
   stroke: var(--color-accent);
+}
+
+.leftArrowLink {
+  position: sticky;
+  top: 10px;
 }
 
 .title {
@@ -57,7 +69,7 @@ a {
   --color-accent: #0d818c;
 
   --font-color: #212529;
-
+  
   --bg-card: #f3f6f7;
   --bg-card-hover: #eaebec;
   --bg-color: #fafafa;
@@ -69,7 +81,7 @@ a {
   --color-accent: #65bbc3;
 
   --font-color: #f3f6f7;
-
+  
   --bg-card: rgba(63, 64, 64, 0.1);
   --bg-card-hover: rgba(63, 64, 64, 0.2);
   --bg-color: #191a1a;

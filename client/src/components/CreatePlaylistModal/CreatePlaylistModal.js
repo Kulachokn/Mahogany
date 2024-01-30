@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Modal from "react-bootstrap/Modal";
+import { Modal } from "react-bootstrap";
 import styles from "./CreatePlaylistModal.module.css";
 
 const CreatePlaylistModal = ({ onHide, show, onFormSubmit }) => {
@@ -38,9 +38,9 @@ const CreatePlaylistModal = ({ onHide, show, onFormSubmit }) => {
             name="name"
             placeholder="My playlist"
             onChange={handleChange}
-            className={styles.formField}
+            className={styles.input}
           />
-          <label className={styles.formLabel}>Name the playlist</label>
+          <label className={styles.label}>Name the playlist</label>
         </div>
         <div className={styles.formGroup}>
           <input
@@ -49,9 +49,9 @@ const CreatePlaylistModal = ({ onHide, show, onFormSubmit }) => {
             placeholder="New emotions"
             rows={3}
             onChange={handleChange}
-            className={styles.formField}
+            className={styles.input}
           />
-          <label className={styles.formLabel}>Description</label>
+          <label className={styles.label}>Description</label>
         </div>
         <button type="submit" className={styles.formBtn}>
           Create

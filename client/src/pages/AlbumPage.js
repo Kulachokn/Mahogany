@@ -69,6 +69,7 @@ const AlbumPage = () => {
         <svg
           width="25"
           height="25"
+          className="leftArrow"
           viewBox="0 0 24 24"
           id="left-arrow icon flat-color"
           data-name="Flat Color"
@@ -80,9 +81,9 @@ const AlbumPage = () => {
           ></path>
         </svg>
       </Link>
-      <div>
+      <div className="listWrap">
         <ToastContainer />
-        <ul className="trackList" style={{ overflowY: "auto" }}>
+        <ul className="trackList">
           {tracks.map((track, ind) => (
             <TracksFromAlbum
               ind={ind}
@@ -91,13 +92,6 @@ const AlbumPage = () => {
               chooseTrack={chooseTrack}
               addToFavorites={addToFavorites}
             />
-            //   <TrackSearchResult
-            //   ind={ind}
-            //   track={track}
-            //   key={track.uri}
-            //   chooseTrack={chooseTrack}
-            //   addToFavorites={addToFavorites}
-            // />
           ))}
         </ul>
       </div>

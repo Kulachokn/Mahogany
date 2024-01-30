@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: var(--bg-card);
 }
 
 .closeBtn {
@@ -35,12 +36,6 @@
   margin-bottom: 20px;
 }
 
-.inputDesc {
-  display: block;
-  font-size: 12px;
-  margin-bottom: 10px;
-}
-
 .formGroup {
   position: relative;
   padding: 15px 0 0;
@@ -48,14 +43,13 @@
   width: 50%;
 }
 
-.formField {
+.input {
   font-family: inherit;
   width: 100%;
   border: 0;
   border-bottom: 2px solid #9b9b9b;
   outline: 0;
   font-size: 1.3rem;
-  /* color: #0000; */
   padding: 7px 0;
   background: transparent;
   transition: border-color 0.2s;
@@ -64,24 +58,30 @@
     color: transparent;
   }
 
-  &:placeholder-shown ~ .formLabel {
+  &:placeholder-shown ~ .label {
     font-size: 1.3rem;
     cursor: text;
     top: 20px;
   }
 }
 
-.formLabel {
+.label {
   position: absolute;
   top: 0;
   display: block;
   transition: 0.2s;
   font-size: 1rem;
   color: #9b9b9b;
+  /* color: var(--color-secondary); */
 }
 
-.formField:focus {
-  ~ .formLabel {
+.modal-content  {
+  font-size: 30px;
+  color: var(--color-accent);
+}
+
+.input:focus {
+  ~ .label {
     position: absolute;
     top: 0;
     display: block;
@@ -95,13 +95,6 @@
   border-width: 3px;
   border-image: linear-gradient(to right, #65bbc3, #109ba8);
   border-image-slice: 1;
-}
-/* reset input */
-.formField {
-  &:required,
-  &:invalid {
-    box-shadow: none;
-  }
 }
 
 .formBtn {

@@ -53,15 +53,10 @@ const TracksFromAlbum = ({
 
   return (
     <>
-      <div
-        className={styles.item}
-        onClick={handlePlay}
-      >
+      <div className={styles.item} onClick={handlePlay}>
         <span className={styles.number}>{ind + 1}</span>
         <div className={styles.title}>
-          <h3 className={styles.name}>
-            {track.name}
-          </h3>
+          <h3 className={styles.name}>{track.name}</h3>
           <p className={styles.artist}>{track.artist}</p>
         </div>
         <p className={styles.duration}>{track.duration}</p>
@@ -135,7 +130,12 @@ const TracksFromAlbum = ({
             </svg>
           </button>
         )}
-        <button type="button" onClick={handleOpenMenu} className={styles.btn}>
+        <button
+          title="More options"
+          type="button"
+          onClick={handleOpenMenu}
+          className={styles.btn}
+        >
           <svg
             className={styles.addIcon}
             viewBox="0 0 1024 1024"

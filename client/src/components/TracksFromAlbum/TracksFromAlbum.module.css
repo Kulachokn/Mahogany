@@ -6,17 +6,16 @@
   padding-right: 20px;
   position: relative;
   cursor: pointer;
+  color: var(--color-secondary);
 }
 
 .item:hover {
-  box-shadow: 0px 0px 10px 10px rgba(255, 255, 255, 0.5);
-  background-color: #f4fbfb;
+  background-color: var(--bg-card-hover);
 }
 
 .number {
   font-size: 18px;
   font-weight: 600;
-  color: #727474;
   justify-self: center;
 }
 
@@ -32,7 +31,6 @@
 .artist {
   font-size: 14px;
   font-weight: 500;
-  color: #727474;
 }
 
 .btn {
