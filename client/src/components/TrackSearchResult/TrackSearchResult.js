@@ -1,6 +1,4 @@
 import { useState } from "react";
-// import { useParams } from "react-router-dom";
-// import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -19,14 +17,13 @@ const TrackSearchResult = ({
   page,
 }) => {
   const [openMenu, setOpenMenu] = useState(false);
-  // const { artistId } = useParams();
 
   const handlePlay = () => {
     chooseTrack(track);
   };
 
   const handleRemove = () => {
-    let title = track.title;
+    let title = track.name;
     track = track.uri.split(":")[2];
     removeFromFavorites(track, title);
   };
@@ -79,13 +76,12 @@ const TrackSearchResult = ({
         />
         <div className={styles.title}>
           <h3 className={styles.name}>{track.name}</h3>
-          {/* <Link to={`/artists/${artistId}`} className={styles.artist}>{artistsName}</Link> */}
           <p className={styles.artist}>{artistsName}</p>
         </div>
         <p className={styles.album}>{track.album.name}</p>
         <p className={styles.duration}>{convertedDuration}</p>
         {page === "library" ? (
-          <button type="button" onClick={handleRemove} className={styles.btn}>
+          <button title="Remove from Library" type="button" onClick={handleRemove} className={styles.btn}>
             <svg
               className={styles.removeIcon}
               viewBox="0 0 24 24"

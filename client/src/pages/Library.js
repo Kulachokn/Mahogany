@@ -15,7 +15,7 @@ const Library = () => {
   const [savedTracks, setSavedTracks] = useState([]);
   const [playingTrack, setPlayingTrack] = useState(null);
   const [loading, setLoading] = useState(true);
-  // const [artistsId, setArtistsId] = useState([]);
+  const [updateFlag, setUpdateFlag] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +48,7 @@ const Library = () => {
     };
 
     fetchData();
-  }, []);
+  }, [updateFlag]);
 
   const chooseTrack = (track) => {
     setPlayingTrack(track);
@@ -57,7 +57,8 @@ const Library = () => {
   const removeFromFavorites = async (track, title) => {
     try {
       await spotifyApi.removeFromMySavedTracks([track]);
-      toast(`Track ${title} removed`, {
+      removeFromLibrary(track);
+      toast(`Track ${title} removed from Library`, {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: true,
@@ -73,10 +74,16 @@ const Library = () => {
     }
   };
 
+  const removeFromLibrary = (track) => {
+    const updatedTracks = savedTracks.filter((prevTrack) => prevTrack.uri !== track.uri);
+    setSavedTracks(updatedTracks);
+    setUpdateFlag((prev) => !prev);
+  } 
+
   return (
     <div>
       <h1 className="title">My Library</h1>
-      <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
+      <div>
         {loading ? (
           <MutatingDots
             height="100"
